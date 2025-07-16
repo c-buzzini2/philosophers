@@ -6,7 +6,7 @@
 #    By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/24 12:59:11 by cbuzzini          #+#    #+#              #
-#    Updated: 2025/07/14 15:29:16 by cbuzzini         ###   ########.fr        #
+#    Updated: 2025/07/16 13:03:26 by cbuzzini         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,9 @@ HDR_ALL = philo.h
 HDR_FILES_ALL = $(addprefix $(INCLUDE_DIR), $(HDR_ALL))
 #HDR_FILES_BONUS = $(addprefix $(INCLUDE_DIR), $(HDR_BONUS))
 
-SRC_FILES = 
+SRC_FILES = main.c \
+			parse_args.c \
+			put_error.c
 
 SRC = $(addprefix $(SRC_DIR), $(SRC_FILES))
 OBJ_FILES = $(addprefix $(OBJ_DIR), $(SRC_FILES:.c=.o))
@@ -31,7 +33,7 @@ OBJ_FILES = $(addprefix $(OBJ_DIR), $(SRC_FILES:.c=.o))
 #OBJ_BONUS = $(addprefix $(OBJ_DIR)bonus_, $(BONUS_FILES:.c=.o))
 
 CC = cc 
-FLAGS = -g -Wall -Wextra -Werror -lpthread
+FLAGS = -g -Wall -Wextra -Werror #-lpthread
 NAME = philo
 
 all: $(NAME)
