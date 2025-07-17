@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 15:29:52 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/07/16 14:03:42 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/07/17 11:54:32 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,33 +24,45 @@ void *ft_start_routine(void *arg)
 	pthread_mutex_unlock(&arrays->forks[thread_id]);
 	return (NULL);
 }
-//START HERE!!!
 int	ft_thread(t_args *args, t_arrays *arrays)
 {
 	int	i;
-    int thread_ids[3] = {1, 2, 3};//allocate according to number of philos as well
+	int	j;
 
-
-	i = 0;
 	arrays->threads = malloc((args->nb_philo) * sizeof(pthread_t));
 	if (arrays->threads == NULL)
 	{
 		ft_puterror("Allocation error");
-		//destroy mutex
-		//free array forks
+		ft_destroy_mutexes();
+		free(arrays->forks);
 		exit (1);
 	}
+	arrays->thread_ids = malloc((args->nb_philo) * sizeof(int));
+	if (arrays->thread_ids == NULL)
+	{
+		ft_puterror("Allocation error");
+		ft_destroy_mutexes();
+		free(arrays->forks);
+		free(arrays->threads);
+		exit (1);
+	}
+	i = 0;
+	while (i < args->nb_philo)
+	{
+		arrays->thread_ids[i] = i;
+		i++;
+	}
+	i = 0;
 	//start counting time
 	while (i < args->nb_philo)
 	{
-		if (pthread_create(&arrays->threads[i], NULL, ft_start_routine, &i) != 0)//does &1 start a race condition?
+		if (pthread_create(&arrays->threads[i], NULL, ft_start_routine, &arrays->thread_ids[i]) != 0)//does &1 start a race condition?
 		{
 			ft_puterror("Could not initialize mutex");
-			//destroy mutex
-			//free array forks
-			//destroy threads up to this point (use while j < i) how???
-			//free array of threads
-			exit (1);
+			j = 0;
+			while (j < i)
+				pthread_join(arrays->threads[j++], NULL);
+			exit (ft_free_destroy_return(1, false));
 		}
 		i++;
 	}
@@ -60,6 +72,7 @@ int	ft_thread(t_args *args, t_arrays *arrays)
 int	ft_mutex_and_thread(t_args *args, t_arrays *arrays)
 {
 	int	i;
+	int	j;
 
 	i = 0;
 	arrays->forks = malloc((args->nb_philo) * sizeof(pthread_mutex_t));
@@ -73,8 +86,10 @@ int	ft_mutex_and_thread(t_args *args, t_arrays *arrays)
 		if (pthread_mutex_init(&arrays->forks[i], NULL) != 0)
 		{
 			ft_puterror("Could not initialize mutex");
-			//destroy mutex up to this point (use while j < i)
-			//free array of forks
+			j = 0;
+			while (j < i)
+				pthread_mutex_destroy(&arrays->forks[j++]);
+			free(arrays->forks);
 			exit (1);
 		}
 		i++;
@@ -101,12 +116,12 @@ int main (int argc, char **argv)
 {
 	t_args *args;
 	t_arrays *arrays;
+	int		i;
 
+	i = 0;
 	args = ft_args();
 	arrays = ft_arrays();
 	ft_parse_args(args, argc, argv);
     ft_mutex_and_thread(args, arrays);
-	
-	free(arrays->forks);
-	free(arrays->threads);
+	return(ft_free_destroy_return(0, true));
 }

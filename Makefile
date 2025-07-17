@@ -6,7 +6,7 @@
 #    By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/24 12:59:11 by cbuzzini          #+#    #+#              #
-#    Updated: 2025/07/16 13:03:26 by cbuzzini         ###   ########.fr        #
+#    Updated: 2025/07/17 11:28:14 by cbuzzini         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,8 @@ HDR_FILES_ALL = $(addprefix $(INCLUDE_DIR), $(HDR_ALL))
 
 SRC_FILES = main.c \
 			parse_args.c \
-			put_error.c
+			put_error.c \
+			termination.c
 
 SRC = $(addprefix $(SRC_DIR), $(SRC_FILES))
 OBJ_FILES = $(addprefix $(OBJ_DIR), $(SRC_FILES:.c=.o))
@@ -62,3 +63,6 @@ fclean: clean
 re: fclean all
 
 .PHONY: clean fclean re all bonus
+
+#valgrind --leak-check=full --show-leak-kinds=all --tool=helgrind --trace-children=yes
+#strace -f -e trace=clone ./philo 5 200 200 200
