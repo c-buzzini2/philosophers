@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 10:36:47 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/07/17 11:50:17 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/07/17 15:53:31 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,5 +64,7 @@ int	ft_free_destroy_return(int ret, bool join_threads)
 	free(arrays->forks);
 	free(arrays->threads);
 	free(arrays->thread_ids);
+	free(arrays->meals);
+	//meals_mutex
 	return (ret);
 }
