@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 15:30:37 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/07/18 11:21:23 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/07/18 17:45:07 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ typedef struct s_args
 	int	eat_time;
 	int	sleep_time;
 	int	should_eat;
-	struct timeval *start_time;
+	struct timeval start_time;
 }	t_args;
 
 typedef struct s_arrays
@@ -49,6 +49,8 @@ int			ft_free_destroy_return(int ret, bool join_threads);
 void		ft_destroy_mutexes(void);
 int			ft_mutex_and_thread(t_args *args, t_arrays *arrays);
 void 		*ft_start_routine(void *arg); 
+void		ft_prepare_to_eat(t_arrays *arrays, int thread_id, int r_philo, int l_philo);
+double 		ft_time_ms(struct timeval start, struct timeval end);
 
 
 

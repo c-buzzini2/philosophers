@@ -1,16 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   routine.c                                          :+:      :+:    :+:   */
+/*   start_routine.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:32:58 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/07/18 16:35:47 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/07/18 16:45:20 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+double ft_time_ms(struct timeval start, struct timeval end)
+{
+    return (end.tv_sec - start.tv_sec) + 
+           (end.tv_usec - start.tv_usec) / 1000.0;
+}
 
 void *ft_start_routine(void *arg)
 {
@@ -32,8 +38,5 @@ void *ft_start_routine(void *arg)
         l_philo = args->nb_philo - 1;
     }
 	ft_prepare_to_eat(arrays, thread_id, r_philo, l_philo);
-	//if ate enough, quit 
-	//else exit
-
 	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:28:34 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/07/18 11:56:21 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/07/18 17:45:15 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static int	ft_thread(t_args *args, t_arrays *arrays)
 	i = 0;
     ft_init_threads_and_meals(args, arrays);
     ft_init_thread_ids(args, arrays);
-    gettimeofday(args->start_time, NULL);
+    gettimeofday(&args->start_time, NULL);
 	while (i < args->nb_philo)
 	{
 		if (pthread_create(&arrays->threads[i], NULL, ft_start_routine, &arrays->thread_ids[i]) != 0)
