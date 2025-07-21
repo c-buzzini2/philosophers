@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 15:30:37 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/07/21 14:45:29 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/07/21 15:31:29 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ typedef struct s_args
 	int	eat_time;
 	int	sleep_time;
 	int	should_eat;
-	struct timeval start_time;
+	struct timeval	start_time;
+	bool			death;
 }	t_args;
 
 typedef struct s_arrays
@@ -39,6 +40,7 @@ typedef struct s_arrays
 	int				*meals;
 	pthread_mutex_t	*meals_mutex;
 	pthread_mutex_t	print_mutex;
+	pthread_mutex_t	death_mutex;
 	struct timeval	*last_meal;
 }	t_arrays;
 

@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 10:36:47 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/07/21 14:43:37 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/07/21 15:34:34 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void    ft_destroy_mutexes(void)
 	ft_destroy_array_mutexes(arrays->forks);
 	ft_destroy_array_mutexes(arrays->meals_mutex);
 	pthread_mutex_destroy(&arrays->print_mutex);
+	pthread_mutex_destroy(&arrays->death_mutex);
 }
 
 
