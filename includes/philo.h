@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 15:30:37 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/07/18 17:45:07 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/07/21 12:24:23 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ typedef struct s_arrays
 	pthread_mutex_t	*forks;
 	int				*thread_ids;
 	int				*meals;
-	pthread_mutex_t	meals_mutex;
-
+	pthread_mutex_t	*meals_mutex;
+	pthread_mutex_t	print_mutex;
 }	t_arrays;
 
 int 		ft_parse_args(t_args *args, int argc, char **argv);
@@ -49,8 +49,9 @@ int			ft_free_destroy_return(int ret, bool join_threads);
 void		ft_destroy_mutexes(void);
 int			ft_mutex_and_thread(t_args *args, t_arrays *arrays);
 void 		*ft_start_routine(void *arg); 
-void		ft_prepare_to_eat(t_arrays *arrays, int thread_id, int r_philo, int l_philo);
+void		ft_prepare_to_eat(t_arrays *arrays, int thread_id, int l_philo);
 double 		ft_time_ms(struct timeval start, struct timeval end);
+void 		ft_print(t_arrays *arrays, t_args *args, int thread_id, char *str);
 
 
 

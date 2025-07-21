@@ -6,11 +6,39 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:28:34 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/07/18 17:45:15 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/07/21 13:12:05 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+static int	ft_meals_mutex(t_args *args, t_arrays *arrays)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	arrays->meals_mutex = malloc((args->nb_philo) * sizeof(pthread_mutex_t));
+	if (arrays->meals_mutex == NULL)
+	{
+		ft_puterror("Allocation error"); //what else should I clean here
+		exit (1);
+	}
+	while (i < args->nb_philo)
+	{
+		if (pthread_mutex_init(&arrays->meals_mutex[i], NULL) != 0)
+		{
+			ft_puterror("Could not initialize mutex");
+			j = 0;
+			while (j < i)
+				pthread_mutex_destroy(&arrays->meals_mutex[j++]);
+			free(arrays->meals_mutex); // what else?
+			exit (1);
+		}
+		i++;
+	}
+	return (0);//?
+}
 
 static int  ft_init_threads_and_meals(t_args *args, t_arrays *arrays)
 {
@@ -111,7 +139,8 @@ int	ft_mutex_and_thread(t_args *args, t_arrays *arrays)
 		}
 		i++;
 	}
-    i = 0;
+    pthread_mutex_init(&arrays->print_mutex, NULL);
+	ft_meals_mutex(args, arrays);
 	ft_thread(args, arrays);
 	return (0);//?
 }
