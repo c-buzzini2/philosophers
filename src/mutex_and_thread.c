@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:28:34 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/07/21 13:12:05 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/07/21 13:25:56 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,10 @@ static int	ft_meals_mutex(t_args *args, t_arrays *arrays)
 			j = 0;
 			while (j < i)
 				pthread_mutex_destroy(&arrays->meals_mutex[j++]);
-			free(arrays->meals_mutex); // what else?
+			free(arrays->meals_mutex);
+			free(arrays->forks);
+		    pthread_mutex_destroy(&arrays->print_mutex);
+			ft_destroy_array_mutexes(arrays->forks);
 			exit (1);
 		}
 		i++;
@@ -51,6 +54,7 @@ static int  ft_init_threads_and_meals(t_args *args, t_arrays *arrays)
 		ft_puterror("Allocation error");
 		ft_destroy_mutexes();
 		free(arrays->forks);
+		free(arrays->meals_mutex);
 		exit (1);
 	}
    	arrays->meals = malloc((args->nb_philo) * sizeof(int));
@@ -60,6 +64,7 @@ static int  ft_init_threads_and_meals(t_args *args, t_arrays *arrays)
 		ft_destroy_mutexes();
 		free(arrays->forks);
 		free(arrays->threads);
+		free(arrays->meals_mutex);
 		exit (1);
 	}
     while (i < args->nb_philo)
@@ -80,6 +85,7 @@ static int  ft_init_thread_ids(t_args *args, t_arrays *arrays)
 		free(arrays->forks);
 		free(arrays->threads);
         free(arrays->meals);
+		free(arrays->meals_mutex);
 		exit (1);
 	}
 	while (i < args->nb_philo)

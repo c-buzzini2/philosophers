@@ -6,7 +6,7 @@
 #    By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/24 12:59:11 by cbuzzini          #+#    #+#              #
-#    Updated: 2025/07/18 16:36:35 by cbuzzini         ###   ########.fr        #
+#    Updated: 2025/07/21 13:27:30 by cbuzzini         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ HDR_FILES_ALL = $(addprefix $(INCLUDE_DIR), $(HDR_ALL))
 
 SRC_FILES = main.c \
 			parse_args.c \
-			put_error.c \
+			print.c \
 			termination.c \
 			mutex_and_thread.c \
 			start_routine.c \
