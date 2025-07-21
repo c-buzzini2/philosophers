@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 15:29:52 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/07/17 13:29:05 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/07/21 14:20:14 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int main (int argc, char **argv)
 	i = 0;
 	args = ft_args();
 	arrays = ft_arrays();
+	args->should_eat = -1;
 	ft_parse_args(args, argc, argv);
     ft_mutex_and_thread(args, arrays);
 	return(ft_free_destroy_return(0, true));

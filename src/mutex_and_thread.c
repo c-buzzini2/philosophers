@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:28:34 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/07/21 13:25:56 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/07/21 14:49:44 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,27 @@ static int  ft_init_thread_ids(t_args *args, t_arrays *arrays)
     return (0);//?
 }
 
+static int  ft_init_last_meal(t_args *args, t_arrays *arrays)
+{
+    int	i;
+
+    i = 0;
+	arrays->last_meal = malloc((args->nb_philo) * sizeof(struct timeval));
+	if (arrays->thread_ids == NULL)
+	{
+		ft_puterror("Allocation error");
+		ft_destroy_mutexes();
+		free(arrays->forks);
+		free(arrays->threads);
+        free(arrays->meals);
+		free(arrays->meals_mutex);
+		free(arrays->thread_ids);
+		exit (1);
+	}
+	
+    return (0);//?
+}
+
 static int	ft_thread(t_args *args, t_arrays *arrays)
 {
 	int i;
@@ -104,7 +125,11 @@ static int	ft_thread(t_args *args, t_arrays *arrays)
 	i = 0;
     ft_init_threads_and_meals(args, arrays);
     ft_init_thread_ids(args, arrays);
+	ft_init_last_meal(args, arrays);
     gettimeofday(&args->start_time, NULL);
+	while (i < args->nb_philo)
+		arrays->last_meal[i++] = args->start_time;
+	i = 0;
 	while (i < args->nb_philo)
 	{
 		if (pthread_create(&arrays->threads[i], NULL, ft_start_routine, &arrays->thread_ids[i]) != 0)
