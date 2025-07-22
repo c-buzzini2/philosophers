@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 15:29:52 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/07/21 15:48:28 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/07/22 16:33:38 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ int main (int argc, char **argv)
 {
 	t_args *args;
 	t_arrays *arrays;
-	int		i;
+	//int		i;
 
-	i = 0;
+	//i = 0;
 	args = ft_args();
 	arrays = ft_arrays();
 	args->should_eat = -1;

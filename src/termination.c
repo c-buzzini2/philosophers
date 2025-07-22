@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 10:36:47 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/07/21 15:34:34 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/07/22 16:35:17 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,12 @@ void    ft_destroy_array_mutexes(pthread_mutex_t *arr)
 
 void    ft_destroy_mutexes(void)
 {
-    int         i;
+    //int         i;
     t_arrays      *arrays;
-    t_args      *args;
+    //t_args      *args;
 
-    i = 0;
-    args = ft_args();
+    //i = 0;
+    //args = ft_args();
     arrays = ft_arrays();
 	ft_destroy_array_mutexes(arrays->forks);
 	ft_destroy_array_mutexes(arrays->meals_mutex);

@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:28:34 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/07/21 15:34:04 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/07/22 16:36:01 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,11 +99,8 @@ static int  ft_init_thread_ids(t_args *args, t_arrays *arrays)
 
 static int  ft_init_last_meal(t_args *args, t_arrays *arrays)
 {
-    int	i;
-
-    i = 0;
-	arrays->last_meal = malloc((args->nb_philo) * sizeof(struct timeval));
-	if (arrays->thread_ids == NULL)
+    arrays->last_meal = malloc((args->nb_philo) * sizeof(struct timeval));
+	if (arrays->last_meal == NULL)
 	{
 		ft_puterror("Allocation error");
 		ft_destroy_mutexes();
@@ -114,8 +111,7 @@ static int  ft_init_last_meal(t_args *args, t_arrays *arrays)
 		free(arrays->thread_ids);
 		exit (1);
 	}
-	
-    return (0);//?
+    return (0);
 }
 
 static int	ft_thread(t_args *args, t_arrays *arrays)

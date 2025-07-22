@@ -6,13 +6,13 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 14:22:21 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/07/21 15:53:33 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/07/22 16:34:34 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	ft_check_death(void)
+int	ft_check_death_flag(void)
 {
 	t_args		*args;
 	t_arrays	*arrays;
@@ -23,32 +23,27 @@ void	ft_check_death(void)
 	if (args->death == true)
 	{
 		pthread_mutex_unlock(&arrays->death_mutex);
-		exit (ft_free_destroy_return(1, true)); //just return
+		return (2);
 	}
 	pthread_mutex_unlock(&arrays->death_mutex);
+	return (0);
 }
 
-void ft_print(t_arrays *arrays, t_args *args, int thread_id, char *action)
+int ft_print(t_arrays *arrays, t_args *args, int thread_id, char *action)
 {
     struct timeval current;
     double timestamp;
 
-	ft_check_death();
-	timestamp = 0.0;
+	if (ft_check_death_flag() == 2)
+		return (2);
     pthread_mutex_lock(&arrays->print_mutex);
     gettimeofday(&current, NULL);
-	if (ft_time_ms(arrays->last_meal[thread_id], current) > args->die_time)
-	{
-		printf("%.0f: P%d %s", timestamp, thread_id + 1, "is dead\n");
-		pthread_mutex_lock(&arrays->death_mutex);
-		args->death = true;
-		pthread_mutex_unlock(&arrays->death_mutex);
-		exit (ft_free_destroy_return(1, true)); // dont exit, return!!
-	}
+	ft_check_starvation(arrays, args, thread_id);
     timestamp = ft_time_ms(args->start_time, current);
     printf("%.0f: P%d %s", timestamp, thread_id + 1, action);
 	printf("        (Thread %d, meal %d)\n", thread_id, arrays->meals[thread_id]);//delete!!
     pthread_mutex_unlock(&arrays->print_mutex);
+	return (0);
 }
 
 static void	ft_putchar_fd(char c, int fd)

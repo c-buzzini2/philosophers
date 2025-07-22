@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 15:30:37 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/07/21 15:31:29 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/07/22 16:54:07 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ typedef struct s_args
 {
 	int	nb_philo;
 	int	die_time;
-	int	eat_time;
-	int	sleep_time;
+	unsigned int	eat_time;
+	unsigned int	sleep_time;
 	int	should_eat;
 	struct timeval	start_time;
 	bool			death;
@@ -52,11 +52,12 @@ int			ft_free_destroy_return(int ret, bool join_threads);
 void		ft_destroy_mutexes(void);
 int			ft_mutex_and_thread(t_args *args, t_arrays *arrays);
 void 		*ft_start_routine(void *arg); 
-void		ft_prepare_to_eat(t_arrays *arrays, t_args *args, int thread_id, int l_philo);
+int			ft_prepare_to_eat(t_arrays *arrays, t_args *args, int thread_id, int l_philo);
 double 		ft_time_ms(struct timeval start, struct timeval end);
-void 		ft_print(t_arrays *arrays, t_args *args, int thread_id, char *str);
+int 		ft_print(t_arrays *arrays, t_args *args, int thread_id, char *str);
 void    	ft_destroy_array_mutexes(pthread_mutex_t *arr);
-void		ft_sleep_and_think(t_arrays *arrays, t_args *args, int thread_id);
-
+int			ft_sleep_and_think(t_arrays *arrays, t_args *args, int thread_id);
+int		 	ft_check_starvation(t_arrays *arrays, t_args *args, int thread_id);
+int			ft_check_death_flag(void);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 11:36:06 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/07/21 14:56:53 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/07/22 16:42:45 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static int	ft_isdigit(int c)
 		return (0);
 }
 
-static int	ft_atoi(const char *nptr)
+static unsigned int	ft_atoi(const char *nptr)
 {
 	int	i;
 	int	neg;
@@ -61,7 +61,7 @@ static int ft_check_args(int argc, char **argv)
 		j = 0;
 		if (argv[i][j] == '+' || argv[i][j] == '-') //corrigir, NENHUM NUMERO DEVE SER NEGATIVO
 		{
-			if (!argv[i][++j])
+			if (argv[i][j] == '-' || !argv[i][++j])
 				return (1);
 		}
 		while (argv[i][j])
@@ -77,7 +77,7 @@ int ft_parse_args(t_args *args, int argc, char **argv)
 {
 	if (ft_check_args(argc, argv) == 1)
 	{
-		ft_puterror("Arguments must be numbers");
+		ft_puterror("Arguments must be positive numbers");
 		exit (1);
 	}
 	args->nb_philo = ft_atoi(argv[1]);
