@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:28:34 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/07/22 16:36:01 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/07/23 14:35:32 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ static int	ft_meals_mutex(t_args *args, t_arrays *arrays)
 			free(arrays->forks);
 		    pthread_mutex_destroy(&arrays->print_mutex);
 		    pthread_mutex_destroy(&arrays->death_mutex);
+			pthread_mutex_destroy(&arrays->start_mutex);
 			ft_destroy_array_mutexes(arrays->forks);
 			exit (1);
 		}
@@ -123,10 +124,7 @@ static int	ft_thread(t_args *args, t_arrays *arrays)
     ft_init_threads_and_meals(args, arrays);
     ft_init_thread_ids(args, arrays);
 	ft_init_last_meal(args, arrays);
-    gettimeofday(&args->start_time, NULL);
-	while (i < args->nb_philo)
-		arrays->last_meal[i++] = args->start_time;
-	i = 0;
+	args->can_start = false;
 	while (i < args->nb_philo)
 	{
 		if (pthread_create(&arrays->threads[i], NULL, ft_start_routine, &arrays->thread_ids[i]) != 0)
@@ -134,11 +132,26 @@ static int	ft_thread(t_args *args, t_arrays *arrays)
 			ft_puterror("Could not initialize mutex");
 			j = 0;
 			while (j < i)
-				pthread_join(arrays->threads[j++], NULL);
+			pthread_join(arrays->threads[j++], NULL);
 			exit (ft_free_destroy_return(1, false));
 		}
 		i++;
 	}
+	// if (pthread_create(&arrays->monitor, NULL, ft_start_routine, &arrays->thread_ids[i]) != 0)
+	// 	{
+	// 		ft_puterror("Could not initialize mutex");
+	// 		j = 0;
+	// 		while (j < i)
+	// 		pthread_join(arrays->threads[j++], NULL);
+	// 		exit (ft_free_destroy_return(1, false));
+	// 	}
+	i = 0;
+	gettimeofday(&args->start_time, NULL);
+	while (i < args->nb_philo)
+		arrays->last_meal[i++] = args->start_time;
+	pthread_mutex_lock(&arrays->start_mutex);
+	args->can_start = true;
+	pthread_mutex_unlock(&arrays->start_mutex);
 	return (0);//?
 }
 
@@ -167,8 +180,9 @@ int	ft_mutex_and_thread(t_args *args, t_arrays *arrays)
 		}
 		i++;
 	}
-    pthread_mutex_init(&arrays->print_mutex, NULL);
+    pthread_mutex_init(&arrays->print_mutex, NULL);//add error check for these 3
     pthread_mutex_init(&arrays->death_mutex, NULL);
+    pthread_mutex_init(&arrays->start_mutex, NULL);
 	ft_meals_mutex(args, arrays);
 	ft_thread(args, arrays);
 	return (0);//?

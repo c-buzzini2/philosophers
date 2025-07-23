@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:32:58 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/07/22 16:32:30 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/07/23 14:14:01 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,20 @@ void *ft_start_routine(void *arg)
     }
     if (args->should_eat == 0)
         return (NULL);
+    usleep(1000);
+    while (1)
+    {
+        pthread_mutex_lock(&arrays->start_mutex);
+        if (args->can_start == true)  // This is false initially
+        {
+            pthread_mutex_unlock(&arrays->start_mutex);
+            break;
+        }
+        pthread_mutex_unlock(&arrays->start_mutex);
+        usleep(100);
+
+    }
+    
     while (1)
     {
         if (ft_prepare_to_eat(arrays, args, thread_id, l_philo) == 2 ||

@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 15:30:37 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/07/22 16:54:07 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/07/23 14:29:47 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,13 @@ typedef struct s_args
 	int	should_eat;
 	struct timeval	start_time;
 	bool			death;
+	bool			can_start;
 }	t_args;
 
 typedef struct s_arrays
 {
 	pthread_t		*threads;
+	pthread_t		monitor;
 	pthread_mutex_t	*forks;
 	int				*thread_ids;
 	int				*meals;
@@ -42,6 +44,7 @@ typedef struct s_arrays
 	pthread_mutex_t	print_mutex;
 	pthread_mutex_t	death_mutex;
 	struct timeval	*last_meal;
+	pthread_mutex_t	start_mutex;
 }	t_arrays;
 
 int 		ft_parse_args(t_args *args, int argc, char **argv);
