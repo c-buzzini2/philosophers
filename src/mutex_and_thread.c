@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:28:34 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/07/23 14:35:32 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/07/23 15:33:38 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static int	ft_meals_mutex(t_args *args, t_arrays *arrays)
 	if (arrays->meals_mutex == NULL)
 	{
 		ft_puterror("Allocation error"); //what else should I clean here
-		exit (1);
+		exit (1);//clean everything
 	}
 	while (i < args->nb_philo)
 	{
@@ -33,11 +33,45 @@ static int	ft_meals_mutex(t_args *args, t_arrays *arrays)
 			while (j < i)
 				pthread_mutex_destroy(&arrays->meals_mutex[j++]);
 			free(arrays->meals_mutex);
-			free(arrays->forks);
-		    pthread_mutex_destroy(&arrays->print_mutex);
-		    pthread_mutex_destroy(&arrays->death_mutex);
+			pthread_mutex_destroy(&arrays->print_mutex);
+			pthread_mutex_destroy(&arrays->death_mutex);
 			pthread_mutex_destroy(&arrays->start_mutex);
 			ft_destroy_array_mutexes(arrays->forks);
+			free(arrays->forks);
+			exit (1);
+		}
+		i++;
+	}
+	return (0);//?
+}
+
+static int	ft_last_meal_mutex(t_args *args, t_arrays *arrays)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	arrays->last_meal_mutex = malloc((args->nb_philo) * sizeof(pthread_mutex_t));
+	if (arrays->last_meal_mutex == NULL)
+	{
+		ft_puterror("Allocation error"); //what else should I clean here
+		exit (1);//clean everything
+	}
+	while (i < args->nb_philo)
+	{
+		if (pthread_mutex_init(&arrays->last_meal_mutex[i], NULL) != 0)
+		{
+			ft_puterror("Could not initialize mutex");
+			j = 0;
+			while (j < i)
+				pthread_mutex_destroy(&arrays->last_meal_mutex[j++]);
+			pthread_mutex_destroy(&arrays->print_mutex);
+			pthread_mutex_destroy(&arrays->death_mutex);
+			pthread_mutex_destroy(&arrays->start_mutex);
+			ft_destroy_array_mutexes(arrays->forks);
+			ft_destroy_array_mutexes(arrays->meals_mutex);
+			free(arrays->forks);
+			free(arrays->meals_mutex);
 			exit (1);
 		}
 		i++;
@@ -137,14 +171,6 @@ static int	ft_thread(t_args *args, t_arrays *arrays)
 		}
 		i++;
 	}
-	// if (pthread_create(&arrays->monitor, NULL, ft_start_routine, &arrays->thread_ids[i]) != 0)
-	// 	{
-	// 		ft_puterror("Could not initialize mutex");
-	// 		j = 0;
-	// 		while (j < i)
-	// 		pthread_join(arrays->threads[j++], NULL);
-	// 		exit (ft_free_destroy_return(1, false));
-	// 	}
 	i = 0;
 	gettimeofday(&args->start_time, NULL);
 	while (i < args->nb_philo)
@@ -152,6 +178,11 @@ static int	ft_thread(t_args *args, t_arrays *arrays)
 	pthread_mutex_lock(&arrays->start_mutex);
 	args->can_start = true;
 	pthread_mutex_unlock(&arrays->start_mutex);
+	if (pthread_create(&arrays->monitor, NULL, ft_monitor, NULL) != 0)
+	{
+		ft_puterror("Could not initialize mutex");
+		exit (ft_free_destroy_return(1, false));//correct this
+	}
 	return (0);//?
 }
 
@@ -184,6 +215,7 @@ int	ft_mutex_and_thread(t_args *args, t_arrays *arrays)
     pthread_mutex_init(&arrays->death_mutex, NULL);
     pthread_mutex_init(&arrays->start_mutex, NULL);
 	ft_meals_mutex(args, arrays);
+	ft_last_meal_mutex(args, arrays);
 	ft_thread(args, arrays);
 	return (0);//?
 }

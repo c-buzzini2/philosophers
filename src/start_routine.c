@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:32:58 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/07/23 14:14:01 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/07/23 15:31:32 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ void *ft_start_routine(void *arg)
         }
         pthread_mutex_unlock(&arrays->start_mutex);
         usleep(100);
-
     }
     
     while (1)

@@ -6,13 +6,12 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 16:33:32 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/07/23 12:08:15 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/07/23 15:37:11 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-//START HERE - check death flag while sleeps
-//create monitoring thread and remove check_starvation from ft_eat
+//START HERE - I've created monitoring thread, but people seem to be dying right after eating, what's happening?
 //are there exits left, and are they ok?
 int	ft_sleep_and_think(t_arrays *arrays, t_args *args, int thread_id)
 {  

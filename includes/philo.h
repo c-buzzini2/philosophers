@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 15:30:37 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/07/23 14:29:47 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/07/23 15:29:46 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct s_arrays
 	pthread_mutex_t	print_mutex;
 	pthread_mutex_t	death_mutex;
 	struct timeval	*last_meal;
+	pthread_mutex_t	*last_meal_mutex;
 	pthread_mutex_t	start_mutex;
 }	t_arrays;
 
@@ -60,7 +61,9 @@ double 		ft_time_ms(struct timeval start, struct timeval end);
 int 		ft_print(t_arrays *arrays, t_args *args, int thread_id, char *str);
 void    	ft_destroy_array_mutexes(pthread_mutex_t *arr);
 int			ft_sleep_and_think(t_arrays *arrays, t_args *args, int thread_id);
-int		 	ft_check_starvation(t_arrays *arrays, t_args *args, int thread_id);
+int		 	ft_check_starvation(t_arrays *arrays, t_args *args);
 int			ft_check_death_flag(void);
+void		*ft_monitor(void *arg);
+
 
 #endif
