@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:28:34 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/07/23 15:33:38 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/07/24 13:23:18 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ static int	ft_meals_mutex(t_args *args, t_arrays *arrays)
 			pthread_mutex_destroy(&arrays->print_mutex);
 			pthread_mutex_destroy(&arrays->death_mutex);
 			pthread_mutex_destroy(&arrays->start_mutex);
+			pthread_mutex_destroy(&arrays->done_mutex);
 			ft_destroy_array_mutexes(arrays->forks);
 			free(arrays->forks);
 			exit (1);
@@ -68,6 +69,7 @@ static int	ft_last_meal_mutex(t_args *args, t_arrays *arrays)
 			pthread_mutex_destroy(&arrays->print_mutex);
 			pthread_mutex_destroy(&arrays->death_mutex);
 			pthread_mutex_destroy(&arrays->start_mutex);
+			pthread_mutex_destroy(&arrays->done_mutex);
 			ft_destroy_array_mutexes(arrays->forks);
 			ft_destroy_array_mutexes(arrays->meals_mutex);
 			free(arrays->forks);
@@ -214,6 +216,7 @@ int	ft_mutex_and_thread(t_args *args, t_arrays *arrays)
     pthread_mutex_init(&arrays->print_mutex, NULL);//add error check for these 3
     pthread_mutex_init(&arrays->death_mutex, NULL);
     pthread_mutex_init(&arrays->start_mutex, NULL);
+    pthread_mutex_init(&arrays->done_mutex, NULL);
 	ft_meals_mutex(args, arrays);
 	ft_last_meal_mutex(args, arrays);
 	ft_thread(args, arrays);

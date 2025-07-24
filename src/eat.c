@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:32:58 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/07/23 15:23:30 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/07/24 13:01:04 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,9 @@ static int	ft_eat(t_arrays *arrays, t_args *args, int thread_id, int l_philo)
 		pthread_mutex_unlock(&arrays->forks[second]);
 		return (2);
 	}
+	pthread_mutex_lock(&arrays->last_meal_mutex[thread_id]);
+	gettimeofday(&arrays->last_meal[thread_id], NULL);
+	pthread_mutex_unlock(&arrays->last_meal_mutex[thread_id]);
 	pthread_mutex_lock(&arrays->meals_mutex[thread_id]);
 	arrays->meals[thread_id]++; // separate function
 	pthread_mutex_unlock(&arrays->meals_mutex[thread_id]);

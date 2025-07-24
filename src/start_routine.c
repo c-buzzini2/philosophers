@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:32:58 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/07/23 15:31:32 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/07/24 13:31:00 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,16 @@ void *ft_start_routine(void *arg)
     
     while (1)
     {
-        if (ft_prepare_to_eat(arrays, args, thread_id, l_philo) == 2 ||
-        arrays->meals[thread_id] == args->should_eat ||
-        ft_check_death_flag() == 2 ||
+        if (ft_prepare_to_eat(arrays, args, thread_id, l_philo) == 2)
+            break ;
+        if (arrays->meals[thread_id] == args->should_eat)
+        {
+            pthread_mutex_lock(&arrays->done_mutex);
+            args->done_eating++;
+            pthread_mutex_unlock(&arrays->done_mutex);
+            break ;
+        }
+        if (ft_check_death_flag() == 2 ||
         ft_sleep_and_think(arrays, args, thread_id) == 2||
         ft_check_death_flag() == 2)
             break ; 

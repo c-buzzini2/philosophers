@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 10:36:47 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/07/23 15:21:13 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/07/24 13:23:59 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void    ft_destroy_mutexes(void)
 	pthread_mutex_destroy(&arrays->print_mutex);
 	pthread_mutex_destroy(&arrays->death_mutex);
 	pthread_mutex_destroy(&arrays->start_mutex);
+	pthread_mutex_destroy(&arrays->done_mutex);
 }
 
 
@@ -65,6 +66,7 @@ void ft_join_threads(void)
 		pthread_join(arrays->threads[i], NULL);
 		i++;
 	}
+	pthread_join(arrays->monitor, NULL);
 }
 
 int	ft_free_destroy_return(int ret, bool join_threads)
