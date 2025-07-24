@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 11:36:06 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/07/22 16:42:45 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/07/24 18:21:03 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,28 @@ static int ft_check_args(int argc, char **argv)
 	}
 	return (0);
 }
+
+void ft_allocate_philos(t_arrays *arrays, t_args *args)
+{
+	int		i;
+	
+	arrays->philos = malloc((args->nb_philo) * sizeof(t_philo));
+	if (arrays->philos == NULL)
+	{
+		ft_puterror("Allocation error");
+		exit (1);
+	}
+	i = 0;
+    while (i < args->nb_philo)
+	{
+		arrays->philos[i].id = i;
+		i++;
+	}
+	i = 0;
+	while (i < args->nb_philo)
+		arrays->philos[i++].last_meal = 0;
+}
+
 int ft_parse_args(t_args *args, int argc, char **argv)
 {
 	if (ft_check_args(argc, argv) == 1)

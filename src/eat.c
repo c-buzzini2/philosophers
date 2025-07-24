@@ -6,13 +6,13 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:32:58 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/07/24 13:01:04 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/07/24 19:10:26 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static int	ft_eat(t_arrays *arrays, t_args *args, int thread_id, int l_philo)
+static int	ft_eat(t_arrays *arrays, t_args *args, int id, int l_philo)
 {
 	int		first;
 	int		second;
@@ -20,36 +20,33 @@ static int	ft_eat(t_arrays *arrays, t_args *args, int thread_id, int l_philo)
 	useconds_t		ate;
 	int				ret;
 	
-	if (thread_id % 2 != 0)
+	if (id % 2 != 0)
 	{
-		first = thread_id;
+		first = id;
 		second = l_philo;
 	}
 	else
 	{
 		first = l_philo;
-		second = thread_id;
+		second = id;
 	}
-	pthread_mutex_lock(&arrays->forks[first]);
-	if (ft_print(arrays, args, thread_id, "grabbed first fork\n") == 2)
+	pthread_mutex_lock(&arrays->philos[first].fork);
+	if (ft_print(arrays, args, id, "grabbed first fork\n") == 2)
 	{
-		pthread_mutex_unlock(&arrays->forks[first]);
+		pthread_mutex_unlock(&arrays->philos[first].fork);
 		return (2);
 	}
-	pthread_mutex_lock(&arrays->forks[second]);
-	if (ft_print(arrays, args, thread_id, "grabbed second fork\n") == 2
-	|| ft_print(arrays, args, thread_id, "is eating\n") == 2)
+	pthread_mutex_lock(&arrays->philos[second].fork);
+	pthread_mutex_lock(&arrays->philos[id].mutex);
+	if (ft_print(arrays, args, id, "grabbed second fork\n") == 2
+	|| ft_print(arrays, args, id, "is eating\n") == 2)
 	{
-		pthread_mutex_unlock(&arrays->forks[first]);
-		pthread_mutex_unlock(&arrays->forks[second]);
+		pthread_mutex_unlock(&arrays->philos[first].fork);
+		pthread_mutex_unlock(&arrays->philos[second].fork);
+		pthread_mutex_unlock(&arrays->philos[id].mutex);
 		return (2);
 	}
-	pthread_mutex_lock(&arrays->last_meal_mutex[thread_id]);
-	gettimeofday(&arrays->last_meal[thread_id], NULL);
-	pthread_mutex_unlock(&arrays->last_meal_mutex[thread_id]);
-	pthread_mutex_lock(&arrays->meals_mutex[thread_id]);
-	arrays->meals[thread_id]++; // separate function
-	pthread_mutex_unlock(&arrays->meals_mutex[thread_id]);
+	arrays->philos[id].meals++; // separate function
 	ate = 0;
 	ret = 0;
 	while (ate / 1000 < args->eat_time)
@@ -69,21 +66,18 @@ static int	ft_eat(t_arrays *arrays, t_args *args, int thread_id, int l_philo)
 		ate += 5000;
 	}
 	if (ret == 0)
-	{
-		pthread_mutex_lock(&arrays->last_meal_mutex[thread_id]);
-		gettimeofday(&arrays->last_meal[thread_id], NULL);
-		pthread_mutex_unlock(&arrays->last_meal_mutex[thread_id]);
-	}
-	pthread_mutex_unlock(&arrays->forks[second]);
-	pthread_mutex_unlock(&arrays->forks[first]);
+	arrays->philos[id].last_meal = ft_timestamp_ms();
+	pthread_mutex_unlock(&arrays->philos[first].fork);
+	pthread_mutex_unlock(&arrays->philos[second].fork);
+	pthread_mutex_unlock(&arrays->philos[id].mutex);
 	return (ret);
 }
 
-int	ft_prepare_to_eat(t_arrays *arrays, t_args *args, int thread_id, int l_philo)
+int	ft_prepare_to_eat(t_arrays *arrays, t_args *args, int id, int l_philo)
 {
-	if(thread_id == 0)
+	if(id == 0)
 		usleep(1);
-	if (ft_eat(arrays, args, thread_id, l_philo) == 2)
+	if (ft_eat(arrays, args, id, l_philo) == 2)
 		return (2);
 	else
 		return (0);	

@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 15:29:52 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/07/22 16:33:38 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/07/24 17:33:06 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int main (int argc, char **argv)
 	args->should_eat = -1;
 	args->death = false;
 	ft_parse_args(args, argc, argv);
+	ft_allocate_philos(arrays, args);
     ft_mutex_and_thread(args, arrays);
 	return(ft_free_destroy_return(0, true)); // when the threads exit on their own, is it a problem to join them again in the end?
 }
