@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:32:58 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/07/24 13:30:55 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/07/24 14:02:11 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ int	ft_check_starvation(t_arrays *arrays, t_args *args)
 		if (i == args->nb_philo)
 		{
 			i = 0;
-			usleep(10);
 		}
+		usleep(500);
 	}
 	return (0);
 }
