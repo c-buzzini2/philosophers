@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 15:29:52 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/07/25 08:32:47 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/07/25 15:07:14 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,7 @@ int main (int argc, char **argv)
 {
 	t_args *args;
 	t_arrays *arrays;
-	//int		i;
 
-	//i = 0;
 	args = ft_args();
 	arrays = ft_arrays();
 	args->should_eat = -1;
@@ -40,5 +38,5 @@ int main (int argc, char **argv)
 	ft_parse_args(args, argc, argv);
 	ft_allocate_philos(arrays, args);
     ft_mutex_and_thread(args, arrays);
-	return(ft_free_destroy_return(0)); // when the threads exit on their own, is it a problem to join them again in the end?
+	return(ft_free_destroy_return(0));
 }

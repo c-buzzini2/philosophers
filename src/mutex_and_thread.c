@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:28:34 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/07/25 08:54:06 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/07/25 15:12:09 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ static int	ft_thread(t_args *args, t_arrays *arrays)
     
 	i = 0;
 	gettimeofday(&args->start_time, NULL);
-	//args->can_start = false;
 	while (i < args->nb_philo)
 	{
 		if (pthread_create(&arrays->philos[i].thread, NULL, ft_start_routine, &arrays->philos[i].id) != 0)
@@ -64,10 +63,6 @@ static int	ft_thread(t_args *args, t_arrays *arrays)
 		}
 		i++;
 	}
-	
-	//pthread_mutex_lock(&arrays->start_mutex);
-	//args->can_start = true;
-	//pthread_mutex_unlock(&arrays->start_mutex);
 	if (pthread_create(&arrays->monitor, NULL, ft_monitor, NULL) != 0)
 	{
 		ft_puterror("Could not initialize mutex");
@@ -76,7 +71,7 @@ static int	ft_thread(t_args *args, t_arrays *arrays)
 		free(arrays->philos);
 		exit (1);
 	}
-	return (0);//?
+	return (0);
 }
 
 int	ft_mutex_and_thread(t_args *args, t_arrays *arrays)
@@ -100,8 +95,7 @@ int	ft_mutex_and_thread(t_args *args, t_arrays *arrays)
 	}
     pthread_mutex_init(&arrays->print_mutex, NULL);//add error check for these 2
     pthread_mutex_init(&arrays->death_mutex, NULL);
-    //pthread_mutex_init(&arrays->start_mutex, NULL);
 	ft_init_forks_and_meals(args, arrays);
 	ft_thread(args, arrays);
-	return (0);//?
+	return (0);
 }

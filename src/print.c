@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 14:22:21 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/07/25 10:42:21 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/07/25 15:04:55 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ int ft_print(t_arrays *arrays, int id, char *action)
 		return (2);
     pthread_mutex_lock(&arrays->print_mutex);
     printf("%ld: P%d %s", timestamp, id + 1, action);
-	printf("        (Thread %d, meal %d)\n", id, arrays->philos[id].meals);//delete!!
     pthread_mutex_unlock(&arrays->print_mutex);
 	return (0);
 }
@@ -47,8 +46,7 @@ static void	ft_putchar_fd(char c, int fd)
 {
 	if (!fd)
 		return ;
-	if (write(fd, &c, 1) == -1)
-		exit(-1);//graceful termination!!!
+	write(fd, &c, 1);
 }
 
 void	ft_puterror(char *s)

@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 16:33:32 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/07/25 11:18:41 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/07/25 15:12:31 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,10 @@
 //are there exits left, and are they ok?
 int	ft_sleep_and_think(t_arrays *arrays, t_args *args, int id)
 {  
-	//useconds_t		slept;
 	int				ret;
 	long			sleep_start;
 
 	ret = 0;
-	//slept = 0;
    	ft_print(arrays, id, "is sleeping\n");
 	sleep_start = ft_timestamp_ms();
 	while (ft_timestamp_ms() - sleep_start < args->sleep_time)
@@ -40,6 +38,5 @@ int	ft_sleep_and_think(t_arrays *arrays, t_args *args, int id)
 	}
     if (ft_print(arrays, id, "is thinking\n") == 2)
 		ret = 2;
-	//usleep(500);//precisa?
 	return (ret);
 }

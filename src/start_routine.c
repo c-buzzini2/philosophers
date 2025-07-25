@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:32:58 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/07/25 10:36:49 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/07/25 15:14:40 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,20 +40,6 @@ void *ft_start_routine(void *arg)
     }
     if (args->should_eat == 0)
         return (NULL);
-/*     usleep(1000);
-    while (1)
-    {
-        pthread_mutex_lock(&arrays->start_mutex);
-        if (args->can_start == true)  // This is false initially
-        {
-            pthread_mutex_unlock(&arrays->start_mutex);
-            break;
-        }
-        pthread_mutex_unlock(&arrays->start_mutex);
-        usleep(100);
-    } */
-    
-    
     if (id % 2 == 0)
         usleep(500);
     
@@ -61,9 +47,8 @@ void *ft_start_routine(void *arg)
     {
         if (ft_prepare_to_eat(arrays, args, id, l_philo) == 2
             || arrays->philos[id].meals == args->should_eat
-            //|| ft_check_death_flag() == 2 //
-            || ft_sleep_and_think(arrays, args, id) == 2
-            || ft_check_death_flag() == 2) //should I check the flag twice here as well?
+            || ft_sleep_and_think(arrays, args, id) == 2)
+            //|| ft_check_death_flag() == 2) //should I check the flag twice here as well?
             break ; 
     }
 	return (NULL);

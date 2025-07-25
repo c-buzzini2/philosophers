@@ -6,19 +6,25 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:32:58 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/07/25 10:50:06 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/07/25 15:05:10 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+static int	ft_single_philo(t_arrays *arrays, int id)
+{
+	pthread_mutex_lock(&arrays->philos[id].fork);
+	ft_print(arrays, id, "has taken the first fork\n");
+	pthread_mutex_unlock(&arrays->philos[id].fork);
+	return (2);
+}
+
 static int	ft_eat(t_arrays *arrays, t_args *args, int id, int l_philo)
 {
 	int		first;
 	int		second;
-	//struct timeval	current;
-	//useconds_t		ate;
-	int				ret;
+	int		ret;
 	
 	if (id % 2 != 0)
 	{
@@ -31,7 +37,7 @@ static int	ft_eat(t_arrays *arrays, t_args *args, int id, int l_philo)
 		second = id;
 	}
 	pthread_mutex_lock(&arrays->philos[first].fork);
-	if (ft_print(arrays, id, "grabbed first fork\n") == 2)
+	if (ft_print(arrays, id, "has taken the first fork\n") == 2)
 	{
 		pthread_mutex_unlock(&arrays->philos[first].fork);
 		return (2);
@@ -39,7 +45,7 @@ static int	ft_eat(t_arrays *arrays, t_args *args, int id, int l_philo)
 	pthread_mutex_lock(&arrays->philos[second].fork);
 	pthread_mutex_lock(&arrays->philos[id].mutex);
 	arrays->philos[id].last_meal = ft_timestamp_ms();
-	if (ft_print(arrays, id, "grabbed second fork\n") == 2
+	if (ft_print(arrays, id, "has taken the second fork\n") == 2
 	|| ft_print(arrays, id, "is eating\n") == 2)
 	{
 		pthread_mutex_unlock(&arrays->philos[first].fork);
@@ -74,7 +80,11 @@ static int	ft_eat(t_arrays *arrays, t_args *args, int id, int l_philo)
 int	ft_prepare_to_eat(t_arrays *arrays, t_args *args, int id, int l_philo)
 {
 	if(id == 0)
+	{
+		if (id == l_philo)
+			return (ft_single_philo(arrays, id));
 		usleep(1);
+	}
 	if (ft_eat(arrays, args, id, l_philo) == 2)
 		return (2);
 	else

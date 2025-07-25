@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 11:36:06 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/07/24 18:21:03 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/07/25 14:08:52 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static int ft_check_args(int argc, char **argv)
     while (i < argc)
 	{
 		j = 0;
-		if (argv[i][j] == '+' || argv[i][j] == '-') //corrigir, NENHUM NUMERO DEVE SER NEGATIVO
+		if (argv[i][j] == '+' || argv[i][j] == '-')
 		{
 			if (argv[i][j] == '-' || !argv[i][++j])
 				return (1);
