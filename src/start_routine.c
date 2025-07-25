@@ -6,13 +6,13 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:32:58 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/07/25 09:58:47 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/07/25 10:36:49 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-double ft_timestamp_ms(void)
+long ft_timestamp_ms(void)
 {
     t_args          *args;
     struct timeval  current;

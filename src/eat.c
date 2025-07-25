@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:32:58 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/07/25 10:07:11 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/07/25 10:50:06 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	ft_eat(t_arrays *arrays, t_args *args, int id, int l_philo)
 	int		first;
 	int		second;
 	//struct timeval	current;
-	useconds_t		ate;
+	//useconds_t		ate;
 	int				ret;
 	
 	if (id % 2 != 0)
@@ -49,25 +49,23 @@ static int	ft_eat(t_arrays *arrays, t_args *args, int id, int l_philo)
 	}
 	arrays->philos[id].meals++; // separate function
 	pthread_mutex_unlock(&arrays->philos[id].mutex);
-	ate = 0;
+	//ate = (ft_timestamp_ms() - ;
 	ret = 0;
-	while (ate / 1000 < args->eat_time)
+	while (ft_timestamp_ms() - arrays->philos[id].last_meal < args->eat_time)
 	{
 		if (ft_check_death_flag() == 2)
 		{
 			ret = 2;
 			break ;
 		}
-		if (args->eat_time * 1000 - ate < 5000)
+		if (args->eat_time - (ft_timestamp_ms() - arrays->philos[id].last_meal) < 5)
 		{
-			usleep(args->eat_time * 1000 - ate);
+			usleep((args->eat_time - (ft_timestamp_ms() - arrays->philos[id].last_meal)) * 1000);
 			break ;
 		}
 		else
 			usleep(5000);
-		ate += 5000;
 	}
-	if (ret == 0)
 	pthread_mutex_unlock(&arrays->philos[first].fork);
 	pthread_mutex_unlock(&arrays->philos[second].fork);
 	return (ret);

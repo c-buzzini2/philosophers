@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 15:30:37 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/07/25 08:48:24 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/07/25 10:37:04 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void		ft_destroy_mutexes(void);
 int			ft_mutex_and_thread(t_args *args, t_arrays *arrays);
 void 		*ft_start_routine(void *arg); 
 int			ft_prepare_to_eat(t_arrays *arrays, t_args *args, int id, int l_philo);
-double 		ft_timestamp_ms(void);
+long 		ft_timestamp_ms(void);
 int 		ft_print(t_arrays *arrays, int id, char *str);
 int			ft_sleep_and_think(t_arrays *arrays, t_args *args, int id);
 int		 	ft_check_starvation(t_arrays *arrays, t_args *args);

@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:32:58 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/07/25 08:37:17 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/07/25 10:55:11 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,11 @@ int	ft_check_starvation(t_arrays *arrays, t_args *args)
 			pthread_mutex_lock(&arrays->philos[i].mutex);
 			if (timestamp - arrays->philos[i].last_meal > args->die_time)
 			{
-				pthread_mutex_lock(&arrays->print_mutex);
 				pthread_mutex_lock(&arrays->death_mutex);
-				printf("%ld: P%d %s", timestamp, i + 1, "is dead\n");
 				args->death = true;
 				pthread_mutex_unlock(&arrays->death_mutex);
+				pthread_mutex_lock(&arrays->print_mutex);
+				printf("%ld: P%d %s", timestamp, i + 1, "IS DEAD!!!!!\n");
 				pthread_mutex_unlock(&arrays->print_mutex);
 				pthread_mutex_unlock(&arrays->philos[i].mutex);
 				return (2);
@@ -44,7 +44,7 @@ int	ft_check_starvation(t_arrays *arrays, t_args *args)
 				return (0);
 			i++;
 		}
-		usleep(500);
+		usleep(1000);
 	}
 	return (0);
 }
