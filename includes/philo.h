@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 15:30:37 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/07/24 19:09:15 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/07/25 08:48:24 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ typedef struct s_arrays
 	pthread_mutex_t	print_mutex;
 	pthread_mutex_t	death_mutex;
 	//pthread_mutex_t	start_mutex;
-	t_philo			*philos
+	t_philo			*philos;
 }	t_arrays;
 
 int 		ft_parse_args(t_args *args, int argc, char **argv);
@@ -62,14 +62,14 @@ int			ft_free_destroy_return(int ret);
 void		ft_destroy_mutexes(void);
 int			ft_mutex_and_thread(t_args *args, t_arrays *arrays);
 void 		*ft_start_routine(void *arg); 
-// int			ft_prepare_to_eat(t_arrays *arrays, t_args *args, int thread_id, int l_philo);
+int			ft_prepare_to_eat(t_arrays *arrays, t_args *args, int id, int l_philo);
 double 		ft_timestamp_ms(void);
-// int 		ft_print(t_arrays *arrays, t_args *args, int thread_id, char *str);
-// void    	ft_destroy_array_mutexes(pthread_mutex_t *arr);
-// int			ft_sleep_and_think(t_arrays *arrays, t_args *args, int thread_id);
-// int		 	ft_check_starvation(t_arrays *arrays, t_args *args);
-// int			ft_check_death_flag(void);
-// void		*ft_monitor(void *arg);
+int 		ft_print(t_arrays *arrays, int id, char *str);
+int			ft_sleep_and_think(t_arrays *arrays, t_args *args, int id);
+int		 	ft_check_starvation(t_arrays *arrays, t_args *args);
+int			ft_check_death_flag(void);
+void		*ft_monitor(void *arg);
+void		ft_join_philos(void);
 
 
 #endif

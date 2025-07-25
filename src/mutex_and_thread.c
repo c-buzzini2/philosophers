@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:28:34 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/07/24 18:37:27 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/07/25 08:54:06 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static int	ft_thread(t_args *args, t_arrays *arrays)
 	//args->can_start = false;
 	while (i < args->nb_philo)
 	{
-		if (pthread_create(&arrays->philos[i].thread, NULL, ft_start_routine, &i) != 0)
+		if (pthread_create(&arrays->philos[i].thread, NULL, ft_start_routine, &arrays->philos[i].id) != 0)
 		{
 			ft_puterror("Could not initialize mutex");
 			j = 0;

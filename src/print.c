@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 14:22:21 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/07/23 14:58:32 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/07/25 08:47:16 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,18 +29,16 @@ int	ft_check_death_flag(void)
 	return (0);
 }
 
-int ft_print(t_arrays *arrays, t_args *args, int thread_id, char *action)
+int ft_print(t_arrays *arrays, int id, char *action)
 {
-    struct timeval current;
-    double timestamp;
+    long timestamp;
 
 	if (ft_check_death_flag() == 2)
 		return (2);
-    pthread_mutex_lock(&arrays->print_mutex);
-    gettimeofday(&current, NULL);
-    timestamp = ft_time_ms(args->start_time, current);
-    printf("%.0f: P%d %s", timestamp, thread_id + 1, action);
-	printf("        (Thread %d, meal %d)\n", thread_id, arrays->meals[thread_id]);//delete!!
+    pthread_mutex_lock(&arrays->print_mutex);//should this be first?
+    timestamp = ft_timestamp_ms();
+    printf("%ld: P%d %s", timestamp, id + 1, action);
+	printf("        (Thread %d, meal %d)\n", id, arrays->philos[id].meals);//delete!!
     pthread_mutex_unlock(&arrays->print_mutex);
 	return (0);
 }

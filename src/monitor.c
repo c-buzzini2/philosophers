@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:32:58 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/07/24 15:37:13 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/07/25 08:37:17 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,37 +14,34 @@
 
 int	ft_check_starvation(t_arrays *arrays, t_args *args)
 {
-	struct timeval current;
-    double timestamp;
+    long timestamp;
 	int		i;
+	int		done_eating;
 
 	while (1)
 	{
 		i = 0;
+		done_eating = 0;
 		while (i < args->nb_philo)
 		{
-			gettimeofday(&current, NULL);
-			pthread_mutex_lock(&arrays->last_meal_mutex[i]);
-			if (ft_time_ms(arrays->last_meal[i], current) > args->die_time)
+			timestamp = ft_timestamp_ms();
+			pthread_mutex_lock(&arrays->philos[i].mutex);
+			if (timestamp - arrays->philos[i].last_meal > args->die_time)
 			{
-				pthread_mutex_unlock(&arrays->last_meal_mutex[i]);
-				timestamp = ft_time_ms(args->start_time, current);
 				pthread_mutex_lock(&arrays->print_mutex);
-				printf("%.0f: P%d %s", timestamp, i + 1, "is dead\n");
 				pthread_mutex_lock(&arrays->death_mutex);
+				printf("%ld: P%d %s", timestamp, i + 1, "is dead\n");
 				args->death = true;
 				pthread_mutex_unlock(&arrays->death_mutex);
 				pthread_mutex_unlock(&arrays->print_mutex);
+				pthread_mutex_unlock(&arrays->philos[i].mutex);
 				return (2);
 			}
-			pthread_mutex_unlock(&arrays->last_meal_mutex[i]);
-			pthread_mutex_lock(&arrays->done_mutex);
-			if (args->done_eating == args->nb_philo)
-			{
-				pthread_mutex_unlock(&arrays->done_mutex);
-				break ;
-			}
-			pthread_mutex_unlock(&arrays->done_mutex);
+			if (args->should_eat == arrays->philos[i].meals)
+				done_eating++;
+			pthread_mutex_unlock(&arrays->philos[i].mutex);
+			if (done_eating == args->nb_philo)
+				return (0);
 			i++;
 		}
 		usleep(500);

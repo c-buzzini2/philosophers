@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:32:58 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/07/24 19:10:26 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/07/25 10:00:01 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,16 @@ static int	ft_eat(t_arrays *arrays, t_args *args, int id, int l_philo)
 		second = id;
 	}
 	pthread_mutex_lock(&arrays->philos[first].fork);
-	if (ft_print(arrays, args, id, "grabbed first fork\n") == 2)
+	if (ft_print(arrays, id, "grabbed first fork\n") == 2)
 	{
 		pthread_mutex_unlock(&arrays->philos[first].fork);
 		return (2);
 	}
 	pthread_mutex_lock(&arrays->philos[second].fork);
 	pthread_mutex_lock(&arrays->philos[id].mutex);
-	if (ft_print(arrays, args, id, "grabbed second fork\n") == 2
-	|| ft_print(arrays, args, id, "is eating\n") == 2)
+	arrays->philos[id].last_meal = ft_timestamp_ms();
+	if (ft_print(arrays, id, "grabbed second fork\n") == 2
+	|| ft_print(arrays, id, "is eating\n") == 2)
 	{
 		pthread_mutex_unlock(&arrays->philos[first].fork);
 		pthread_mutex_unlock(&arrays->philos[second].fork);
@@ -47,7 +48,8 @@ static int	ft_eat(t_arrays *arrays, t_args *args, int id, int l_philo)
 		return (2);
 	}
 	arrays->philos[id].meals++; // separate function
-	ate = 0;
+	pthread_mutex_unlock(&arrays->philos[id].mutex);
+	ate = args->eat_time - (ft_timestamp_ms() - arrays->philos[id].last_meal);
 	ret = 0;
 	while (ate / 1000 < args->eat_time)
 	{
@@ -66,10 +68,8 @@ static int	ft_eat(t_arrays *arrays, t_args *args, int id, int l_philo)
 		ate += 5000;
 	}
 	if (ret == 0)
-	arrays->philos[id].last_meal = ft_timestamp_ms();
 	pthread_mutex_unlock(&arrays->philos[first].fork);
 	pthread_mutex_unlock(&arrays->philos[second].fork);
-	pthread_mutex_unlock(&arrays->philos[id].mutex);
 	return (ret);
 }
 
