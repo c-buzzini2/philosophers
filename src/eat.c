@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:32:58 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/07/25 10:00:01 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/07/25 10:07:11 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static int	ft_eat(t_arrays *arrays, t_args *args, int id, int l_philo)
 	}
 	arrays->philos[id].meals++; // separate function
 	pthread_mutex_unlock(&arrays->philos[id].mutex);
-	ate = args->eat_time - (ft_timestamp_ms() - arrays->philos[id].last_meal);
+	ate = 0;
 	ret = 0;
 	while (ate / 1000 < args->eat_time)
 	{
