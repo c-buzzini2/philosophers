@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:32:58 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/07/25 15:05:10 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/07/27 12:01:12 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ static int	ft_eat(t_arrays *arrays, t_args *args, int id, int l_philo)
 	{
 		first = l_philo;
 		second = id;
+		usleep(500);
 	}
 	pthread_mutex_lock(&arrays->philos[first].fork);
 	if (ft_print(arrays, id, "has taken the first fork\n") == 2)
@@ -83,7 +84,8 @@ int	ft_prepare_to_eat(t_arrays *arrays, t_args *args, int id, int l_philo)
 	{
 		if (id == l_philo)
 			return (ft_single_philo(arrays, id));
-		usleep(1);
+		if (args->nb_philo % 2 != 0)
+			usleep(1000);
 	}
 	if (ft_eat(arrays, args, id, l_philo) == 2)
 		return (2);
