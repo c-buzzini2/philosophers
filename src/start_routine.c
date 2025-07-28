@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:32:58 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/07/27 11:22:27 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/07/28 14:43:06 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,6 @@ void *ft_start_routine(void *arg)
     }
     if (args->should_eat == 0)
         return (NULL);
-    // if (id % 2 == 0)
-    //     usleep(500);
-    
     while (1)
     {
         if (ft_prepare_to_eat(arrays, args, id, l_philo) == 2

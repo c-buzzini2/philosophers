@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 10:36:47 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/07/25 15:13:47 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/07/28 14:00:30 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,9 @@ void    ft_destroy_mutexes(void)
 	i = 0;
 	while (i < args->nb_philo)
         pthread_mutex_destroy(&arrays->philos[i++].fork);
+	i = 0;
+	while (i < args->nb_philo)
+        pthread_mutex_destroy(&arrays->philos[i++].turn_mutex);
 	pthread_mutex_destroy(&arrays->print_mutex);
 	pthread_mutex_destroy(&arrays->death_mutex);
 }

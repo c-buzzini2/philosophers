@@ -6,13 +6,12 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 16:33:32 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/07/27 09:39:51 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/07/28 15:47:31 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-//START HERE
-//are there exits left, and are they ok?
+
 int	ft_sleep_and_think(t_arrays *arrays, t_args *args, int id)
 {  
 	int				ret;
@@ -38,6 +37,5 @@ int	ft_sleep_and_think(t_arrays *arrays, t_args *args, int id)
 	}
     if (ft_print(arrays, id, "is thinking\n") == 2)
 		ret = 2;
-	usleep (50);
 	return (ret);
 }

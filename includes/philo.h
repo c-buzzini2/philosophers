@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 15:30:37 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/07/25 15:14:06 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/07/28 13:19:53 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <pthread.h>
 # include <stdbool.h>
 # include <sys/time.h>
+# include <string.h>
 
 typedef struct s_philo
 {
@@ -29,6 +30,8 @@ typedef struct s_philo
 	int				meals;
 	long			last_meal;
 	pthread_mutex_t	mutex;
+	pthread_mutex_t	turn_mutex;
+	bool			own_turn;
 }	t_philo;
 
 typedef struct s_args

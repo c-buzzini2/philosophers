@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 11:36:06 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/07/25 14:08:52 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/07/28 15:47:22 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,21 @@ static int ft_check_args(int argc, char **argv)
 	return (0);
 }
 
+void ft_set_turns(t_arrays *arrays, t_args *args)
+{
+	int		i;
+	
+	i = 0;
+	while (i < args->nb_philo)
+	{
+		if (i % 2 != 0)
+			arrays->philos[i].own_turn = 1;
+		else
+			arrays->philos[i].own_turn = 0;
+		i++;
+	}
+}
+
 void ft_allocate_philos(t_arrays *arrays, t_args *args)
 {
 	int		i;
@@ -94,7 +109,9 @@ void ft_allocate_philos(t_arrays *arrays, t_args *args)
 	i = 0;
 	while (i < args->nb_philo)
 		arrays->philos[i++].last_meal = 0;
+	ft_set_turns(arrays, args);
 }
+
 
 int ft_parse_args(t_args *args, int argc, char **argv)
 {
