@@ -84,6 +84,7 @@ void ft_allocate_philos(t_arrays *arrays, t_args *args)
 		ft_puterror("Allocation error");
 		exit (1);
 	}
+	memset(arrays->philos, 0, (args->nb_philo) * sizeof(t_philo));
 	i = 0;
     while (i < args->nb_philo)
 	{
