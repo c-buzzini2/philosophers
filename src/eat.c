@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:32:58 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/07/28 15:46:43 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/07/28 15:58:36 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,20 +41,21 @@ static int	ft_eat(t_arrays *arrays, t_args *args, int id, int l_philo)
 		pthread_mutex_lock(&arrays->philos[id].turn_mutex);
 		if(arrays->philos[id].own_turn == 1)
 		{
+			pthread_mutex_unlock(&arrays->philos[id].turn_mutex);
 			pthread_mutex_lock(&arrays->philos[l_philo].turn_mutex);
 			if(arrays->philos[l_philo].own_turn == 0)
 				break ;
 			pthread_mutex_unlock(&arrays->philos[l_philo].turn_mutex);
 		}
-		pthread_mutex_unlock(&arrays->philos[id].turn_mutex);
+		else
+			pthread_mutex_unlock(&arrays->philos[id].turn_mutex);
 		usleep(100);
 	}
+	pthread_mutex_unlock(&arrays->philos[l_philo].turn_mutex);
 	pthread_mutex_lock(&arrays->philos[first].fork);
 	if (ft_print(arrays, id, "has taken the first fork\n") == 2)
 	{
 		pthread_mutex_unlock(&arrays->philos[first].fork);
-		pthread_mutex_unlock(&arrays->philos[id].turn_mutex);
-		pthread_mutex_unlock(&arrays->philos[l_philo].turn_mutex);
 		return (2);
 	}
 	pthread_mutex_lock(&arrays->philos[second].fork);
@@ -66,15 +67,15 @@ static int	ft_eat(t_arrays *arrays, t_args *args, int id, int l_philo)
 		pthread_mutex_unlock(&arrays->philos[first].fork);
 		pthread_mutex_unlock(&arrays->philos[second].fork);
 		pthread_mutex_unlock(&arrays->philos[id].mutex);
-		pthread_mutex_unlock(&arrays->philos[id].turn_mutex);
-		pthread_mutex_unlock(&arrays->philos[l_philo].turn_mutex);
 		return (2);
 	}
 	arrays->philos[id].meals++; // separate function
 	pthread_mutex_unlock(&arrays->philos[id].mutex);
+	pthread_mutex_lock(&arrays->philos[id].turn_mutex);
 	arrays->philos[id].own_turn = 0;
-	arrays->philos[l_philo].own_turn = 1;
 	pthread_mutex_unlock(&arrays->philos[id].turn_mutex);
+	pthread_mutex_lock(&arrays->philos[l_philo].turn_mutex);
+	arrays->philos[l_philo].own_turn = 1;
 	pthread_mutex_unlock(&arrays->philos[l_philo].turn_mutex);
 	ret = 0;
 	while (ft_timestamp_ms() - arrays->philos[id].last_meal < args->eat_time)
