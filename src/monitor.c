@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:32:58 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/07/27 12:28:02 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/07/29 13:31:46 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	ft_check_starvation(t_arrays *arrays, t_args *args)
 {
-    long timestamp;
+	long	timestamp;
 	int		i;
 	int		done_eating;
 
@@ -49,14 +49,14 @@ int	ft_check_starvation(t_arrays *arrays, t_args *args)
 	return (0);
 }
 
-void *ft_monitor(void *arg)
+void	*ft_monitor(void *arg)
 {
-	t_arrays    *arrays;
-    t_args      *args;
+	t_arrays	*arrays;
+	t_args		*args;
 
 	(void)arg;
 	arrays = ft_arrays();
-    args = ft_args();
+	args = ft_args();
 	ft_check_starvation(arrays, args);
 	return (NULL);
 }

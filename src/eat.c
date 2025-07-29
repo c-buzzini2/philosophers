@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:32:58 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/07/28 15:58:36 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/07/29 13:48:22 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int	ft_eat(t_arrays *arrays, t_args *args, int id, int l_philo)
 	int		first;
 	int		second;
 	int		ret;
-	
+
 	if (id % 2 != 0)
 	{
 		first = id;
@@ -39,11 +39,11 @@ static int	ft_eat(t_arrays *arrays, t_args *args, int id, int l_philo)
 	while (1)
 	{
 		pthread_mutex_lock(&arrays->philos[id].turn_mutex);
-		if(arrays->philos[id].own_turn == 1)
+		if (arrays->philos[id].own_turn == 1)
 		{
 			pthread_mutex_unlock(&arrays->philos[id].turn_mutex);
 			pthread_mutex_lock(&arrays->philos[l_philo].turn_mutex);
-			if(arrays->philos[l_philo].own_turn == 0)
+			if (arrays->philos[l_philo].own_turn == 0)
 				break ;
 			pthread_mutex_unlock(&arrays->philos[l_philo].turn_mutex);
 		}
@@ -62,7 +62,7 @@ static int	ft_eat(t_arrays *arrays, t_args *args, int id, int l_philo)
 	pthread_mutex_lock(&arrays->philos[id].mutex);
 	arrays->philos[id].last_meal = ft_timestamp_ms();
 	if (ft_print(arrays, id, "has taken the second fork\n") == 2
-	|| ft_print(arrays, id, "is eating\n") == 2)
+		|| ft_print(arrays, id, "is eating\n") == 2)
 	{
 		pthread_mutex_unlock(&arrays->philos[first].fork);
 		pthread_mutex_unlock(&arrays->philos[second].fork);
@@ -85,9 +85,11 @@ static int	ft_eat(t_arrays *arrays, t_args *args, int id, int l_philo)
 			ret = 2;
 			break ;
 		}
-		if (args->eat_time - (ft_timestamp_ms() - arrays->philos[id].last_meal) < 5)
+		if (args->eat_time
+			- (ft_timestamp_ms() - arrays->philos[id].last_meal) < 5)
 		{
-			usleep((args->eat_time - (ft_timestamp_ms() - arrays->philos[id].last_meal)) * 1000);
+			usleep((args->eat_time - (ft_timestamp_ms()
+						- arrays->philos[id].last_meal)) * 1000);
 			break ;
 		}
 		else
@@ -100,7 +102,7 @@ static int	ft_eat(t_arrays *arrays, t_args *args, int id, int l_philo)
 
 int	ft_prepare_to_eat(t_arrays *arrays, t_args *args, int id, int l_philo)
 {
-	if(id == 0)
+	if (id == 0)
 	{
 		if (id == l_philo)
 			return (ft_single_philo(arrays, id));
@@ -108,5 +110,5 @@ int	ft_prepare_to_eat(t_arrays *arrays, t_args *args, int id, int l_philo)
 	if (ft_eat(arrays, args, id, l_philo) == 2)
 		return (2);
 	else
-		return (0);	
+		return (0);
 }

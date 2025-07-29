@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 11:36:06 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/07/28 15:47:22 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/07/29 13:29:54 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,10 @@ static unsigned int	ft_atoi(const char *nptr)
 	return (nb * neg);
 }
 
-static int ft_check_args(int argc, char **argv)
+static int	ft_check_args(int argc, char **argv)
 {
 	int	i;
-	int j;
+	int	j;
 
 	i = 1;
 	if (argc != 5 && argc != 6)
@@ -56,7 +56,7 @@ static int ft_check_args(int argc, char **argv)
 		ft_puterror("You need 4 or 5 arguments");
 		exit (1);
 	}
-    while (i < argc)
+	while (i < argc)
 	{
 		j = 0;
 		if (argv[i][j] == '+' || argv[i][j] == '-')
@@ -74,10 +74,10 @@ static int ft_check_args(int argc, char **argv)
 	return (0);
 }
 
-void ft_set_turns(t_arrays *arrays, t_args *args)
+void	ft_set_turns(t_arrays *arrays, t_args *args)
 {
 	int		i;
-	
+
 	i = 0;
 	while (i < args->nb_philo)
 	{
@@ -89,10 +89,10 @@ void ft_set_turns(t_arrays *arrays, t_args *args)
 	}
 }
 
-void ft_allocate_philos(t_arrays *arrays, t_args *args)
+void	ft_allocate_philos(t_arrays *arrays, t_args *args)
 {
 	int		i;
-	
+
 	arrays->philos = malloc((args->nb_philo) * sizeof(t_philo));
 	if (arrays->philos == NULL)
 	{
@@ -101,7 +101,7 @@ void ft_allocate_philos(t_arrays *arrays, t_args *args)
 	}
 	memset(arrays->philos, 0, (args->nb_philo) * sizeof(t_philo));
 	i = 0;
-    while (i < args->nb_philo)
+	while (i < args->nb_philo)
 	{
 		arrays->philos[i].id = i;
 		i++;
@@ -112,8 +112,7 @@ void ft_allocate_philos(t_arrays *arrays, t_args *args)
 	ft_set_turns(arrays, args);
 }
 
-
-int ft_parse_args(t_args *args, int argc, char **argv)
+int	ft_parse_args(t_args *args, int argc, char **argv)
 {
 	if (ft_check_args(argc, argv) == 1)
 	{

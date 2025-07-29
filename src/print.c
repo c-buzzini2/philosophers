@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 14:22:21 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/07/25 15:04:55 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/07/29 13:36:13 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,16 @@ int	ft_check_death_flag(void)
 	return (0);
 }
 
-int ft_print(t_arrays *arrays, int id, char *action)
+int	ft_print(t_arrays *arrays, int id, char *action)
 {
-    long timestamp;
+	long	timestamp;
 
-    timestamp = ft_timestamp_ms();
-    if (ft_check_death_flag() == 2)
+	timestamp = ft_timestamp_ms();
+	if (ft_check_death_flag() == 2)
 		return (2);
-    pthread_mutex_lock(&arrays->print_mutex);
-    printf("%ld: P%d %s", timestamp, id + 1, action);
-    pthread_mutex_unlock(&arrays->print_mutex);
+	pthread_mutex_lock(&arrays->print_mutex);
+	printf("%ld: P%d %s", timestamp, id + 1, action);
+	pthread_mutex_unlock(&arrays->print_mutex);
 	return (0);
 }
 
