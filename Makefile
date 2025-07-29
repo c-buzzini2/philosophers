@@ -6,7 +6,7 @@
 #    By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/24 12:59:11 by cbuzzini          #+#    #+#              #
-#    Updated: 2025/07/29 15:54:09 by cbuzzini         ###   ########.fr        #
+#    Updated: 2025/07/29 17:43:14 by cbuzzini         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ SRC_FILES = main.c \
 			mutexes.c \
 			threads.c \
 			start_routine.c \
+			prepare_to_eat.c \
 			eat.c \
 			sleep.c \
 			monitor.c \

@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:32:58 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/07/29 13:35:48 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/07/29 17:29:51 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	*ft_start_routine(void *arg)
 		return (NULL);
 	while (1)
 	{
-		if (ft_prepare_to_eat(arrays, args, id, l_philo) == 2
+		if (ft_prepare_to_eat(arrays, id, l_philo) == 2
 			|| arrays->philos[id].meals == args->should_eat
 			|| ft_check_death_flag() == 2
 			|| ft_sleep_and_think(arrays, args, id) == 2
