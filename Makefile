@@ -6,7 +6,7 @@
 #    By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/24 12:59:11 by cbuzzini          #+#    #+#              #
-#    Updated: 2025/07/23 14:31:46 by cbuzzini         ###   ########.fr        #
+#    Updated: 2025/07/29 15:54:09 by cbuzzini         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,11 +24,13 @@ SRC_FILES = main.c \
 			parse_args.c \
 			print.c \
 			termination.c \
-			mutex_and_thread.c \
+			mutexes.c \
+			threads.c \
 			start_routine.c \
 			eat.c \
 			sleep.c \
-			monitor.c
+			monitor.c \
+			utils.c
 
 SRC = $(addprefix $(SRC_DIR), $(SRC_FILES))
 OBJ_FILES = $(addprefix $(OBJ_DIR), $(SRC_FILES:.c=.o))
