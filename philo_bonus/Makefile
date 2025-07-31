@@ -6,7 +6,7 @@
 #    By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/24 12:59:11 by cbuzzini          #+#    #+#              #
-#    Updated: 2025/07/30 11:10:36 by cbuzzini         ###   ########.fr        #
+#    Updated: 2025/07/30 11:10:59 by cbuzzini         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ SRC_DIR = src/
 OBJ_DIR = obj/
 INCLUDE_DIR = includes/
 
-HDR_ALL = philo.h
+HDR_ALL = philo_bonus.h
 
 HDR_FILES_ALL = $(addprefix $(INCLUDE_DIR), $(HDR_ALL))
 
@@ -36,7 +36,7 @@ OBJ_FILES = $(addprefix $(OBJ_DIR), $(SRC_FILES:.c=.o))
 
 CC = cc 
 FLAGS = -g -Wall -Wextra -Werror
-NAME = philo
+NAME = philo_bonus
 
 all: $(NAME)
 
