@@ -6,21 +6,23 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 14:22:21 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/07/31 12:56:34 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/08/01 13:54:25 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
 
-int	ft_print(t_arrays *arrays, int id, char *action)
+int	ft_print(t_philo *philo, char *action)
 {
-	long	timestamp;
+	long		timestamp;
+	t_arrays	*arrays;
 
+	arrays = ft_arrays();
 	timestamp = ft_timestamp_ms();
-	if (ft_check_death_flag() == 2)
+	if (ft_check_starvation(philo) == 2)
 		return (2);
 	sem_wait(arrays->print_sem);
-	printf("%ld: P%d %s", timestamp, id + 1, action);
+	printf("%ld: P%d %s", timestamp, philo->id + 1, action);
 	sem_post(arrays->print_sem);
 	return (0);
 }

@@ -6,11 +6,17 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:32:58 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/07/31 14:25:48 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/08/01 14:35:18 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
+
+static int	ft_single_philo(t_philo *philo)
+{
+	ft_print(philo, "has taken the first fork\n");
+	return (ft_eat(philo));
+}
 
 long	ft_timestamp_ms(void)
 {
@@ -23,29 +29,24 @@ long	ft_timestamp_ms(void)
 		+ (current.tv_usec - args->start_time.tv_usec) / 1000.0);
 }
 
-void	*ft_start_routine(t_philo *philo)
+int	ft_start_routine(t_philo *philo)
 {
-	int			id;
-	t_arrays	*arrays;
-	int			l_philo;
 	t_args		*args;
 
-	id = philo->id;
-	arrays = ft_arrays();
 	args = ft_args();
-	l_philo = id - 1;
-	if (l_philo == -1)
-		l_philo = args->nb_philo - 1;
 	if (args->should_eat == 0)
-		return (NULL);
+		return (0);
+	if (args->nb_philo == 1)
+		ft_single_philo(philo);
 	while (1)
 	{
-		if (ft_prepare_to_eat(arrays, id, l_philo) == 2
-			|| philo->meals == args->should_eat
-			|| ft_check_death_flag() == 2
-			|| ft_sleep_and_think(arrays, args, id) == 2
-			|| ft_check_death_flag() == 2)
-			break ;
+		if (ft_grab_forks(philo) == 2)
+			exit (ft_close_semaphores(2));
+		if (philo->meals == args->should_eat)
+			exit (ft_close_semaphores(0));
+		if (ft_check_starvation(philo) == 2
+			|| ft_sleep_and_think(philo, args) == 2
+			|| ft_check_starvation(philo) == 2)
+			exit (ft_close_semaphores(2));
 	}
-	return (NULL);
 }

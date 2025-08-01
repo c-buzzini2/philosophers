@@ -6,40 +6,74 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:28:34 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/07/31 15:35:56 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/08/01 14:02:16 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
 //START HERE!!!! Fork processes, wait[id, graceful termination]
 
-int	ft_parent(t_args *args, int last_pid)
+void	ft_change_boolean(t_pids *pids, int exited, t_args *args)
+{
+	int i;
+
+	i = 0;
+	while (i < args->nb_philo)
+	{
+		if (pids[i].pid == exited)
+		{
+			pids[i].exited = true;
+			break ;
+		}
+		i++;
+	}
+}
+
+void	ft_kill_remaining_processes(t_pids *pids, t_args *args)
+{
+	int i;
+
+	i = 0;
+	while (i < args->nb_philo)
+	{
+		if (pids[i].exited == false)
+			kill(pids[i].pid, SIGKILL);
+		i++;
+	}
+}
+
+int	ft_parent(t_args *args, t_pids *pids)
 {
 	int		e_status;
 	int		exited;
-	//int		last_status;
-	int		i;
 	int		e_code;
-	
 
 	while (1)
 	{
-		waitpid(-1, &e_status, 0);
-		// if (exited == last_pid)
-		// 	last_status = estatus;
+		exited = waitpid(-1, &e_status, 0);
 		if (exited <= 0)
 			break ;
+		ft_change_boolean(pids, exited, args);
 		if (WIFEXITED(e_status)) 
 		{
     		e_code = WEXITSTATUS(e_status);
     		if (e_code == 2) 
 			{
-	        // send kill signals...
-				return (2);
-    		}
+				ft_kill_remaining_processes(pids, args);
+				while (1)
+				{
+					exited = waitpid(-1, &e_status, 0);
+					if (exited <= 0)
+					{
+						free(pids);
+						return (0);
+					}
+    			}
+			}
 		}
-	return (0);
 	}
+	free(pids);
+	return (0);
 }
 
 t_philo	*ft_create_philo(void)
@@ -49,13 +83,33 @@ t_philo	*ft_create_philo(void)
 	return (&philo);
 }
 
-int	ft_forks(t_args *args)
+t_pids	*ft_allocate_pids(t_args *args, t_arrays *arrays)
+{
+	t_pids	*pids;
+	
+	pids = malloc(args->nb_philo * sizeof(t_pids));
+	if (pids == NULL)
+	{
+		perror("Error in the fork");
+		sem_close(arrays->print_sem);
+		sem_close(arrays->forks);
+		ft_unlink_semaphores();
+		exit(1);
+	}
+	return (pids);
+}
+
+int	ft_forks(t_args *args, t_arrays *arrays)
 {
 	int		id;
 	int		forks;
 	t_philo	*philo;
+	t_pids	*pids;
+	int		i;
 
+	i = 0;
 	forks = 0;
+	pids = ft_allocate_pids(args, arrays);
 	gettimeofday(&args->start_time, NULL);
 	while (forks < args->nb_philo)
 	{
@@ -63,16 +117,26 @@ int	ft_forks(t_args *args)
 		if (id == -1)
 		{
 			perror("Error in the fork");
-			exit(ft_free_destroy_return(1));
+			sem_close(arrays->print_sem);
+			sem_close(arrays->forks);
+			ft_unlink_semaphores();
+			exit(1);
 		}
 		if (id == 0)
 		{
+			free(pids);
 			philo = ft_create_philo();
 			philo->id = forks;
 			ft_open_turn_sems(philo, args);
 			ft_start_routine(philo);
 		}
+		else
+		{
+			pids[i].pid = id;
+			pids[i].exited = false;
+		}
 		forks++;
+		i++;
 	}
-	return (ft_parent(args, id));
+	return (ft_parent(args, pids));
 }

@@ -6,79 +6,48 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:32:58 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/07/29 17:42:34 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/08/01 15:20:55 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "philo_bonus.h"
 
-static int	ft_eat(t_arrays *arrays, int id, int first, int second)
+int	ft_eat(t_philo *philo)
 {
 	int		ret;
 	t_args	*args;
 
 	args = ft_args();
 	ret = 0;
-	while (ft_timestamp_ms() - arrays->philos[id].last_meal < args->eat_time)
+	while (ft_timestamp_ms() - philo->last_meal < args->eat_time)
 	{
-		if (ft_check_death_flag() == 2)
+		if (ft_check_starvation(philo) == 2)
 		{
 			ret = 2;
 			break ;
 		}
 		if (args->eat_time
-			- (ft_timestamp_ms() - arrays->philos[id].last_meal) < 5)
+			- (ft_timestamp_ms() - philo->last_meal) < 5)
 		{
 			usleep((args->eat_time - (ft_timestamp_ms()
-						- arrays->philos[id].last_meal)) * 1000);
+						- philo->last_meal)) * 1000);
 			break ;
 		}
 		else
 			usleep(5000);
 	}
-	pthread_mutex_unlock(&arrays->philos[first].fork);
-	pthread_mutex_unlock(&arrays->philos[second].fork);
+	sem_post(philo->left_sem);
 	return (ret);
 }
 
-static int	ft_change_turns(int first, int second, int id, int l_philo)
+int	ft_grab_forks(t_philo *philo)
 {
-	t_arrays	*arrays;
-
-	arrays = ft_arrays();
-	pthread_mutex_lock(&arrays->philos[id].turn_mutex);
-	arrays->philos[id].own_turn = 0;
-	pthread_mutex_unlock(&arrays->philos[id].turn_mutex);
-	pthread_mutex_lock(&arrays->philos[l_philo].turn_mutex);
-	arrays->philos[l_philo].own_turn = 1;
-	pthread_mutex_unlock(&arrays->philos[l_philo].turn_mutex);
-	return (ft_eat(arrays, id, first, second));
-}
-
-int	ft_grab_forks(int first, int second, int id, int l_philo)
-{
-	t_arrays	*arrays;
-
-	arrays = ft_arrays();
-	pthread_mutex_unlock(&arrays->philos[l_philo].turn_mutex);
-	pthread_mutex_lock(&arrays->philos[first].fork);
-	if (ft_print(arrays, id, "has taken the first fork\n") == 2)
-	{
-		pthread_mutex_unlock(&arrays->philos[first].fork);
+	sem_wait(philo->turn_sem);
+	if (ft_print(philo, "has taken the first fork\n") == 2
+			|| ft_print(philo, "has taken the second fork\n") == 2
+			|| ft_print(philo, "is eating\n") == 2)
 		return (2);
-	}
-	pthread_mutex_lock(&arrays->philos[second].fork);
-	pthread_mutex_lock(&arrays->philos[id].mutex);
-	arrays->philos[id].last_meal = ft_timestamp_ms();
-	if (ft_print(arrays, id, "has taken the second fork\n") == 2
-		|| ft_print(arrays, id, "is eating\n") == 2)
-	{
-		pthread_mutex_unlock(&arrays->philos[first].fork);
-		pthread_mutex_unlock(&arrays->philos[second].fork);
-		pthread_mutex_unlock(&arrays->philos[id].mutex);
-		return (2);
-	}
-	arrays->philos[id].meals++;
-	pthread_mutex_unlock(&arrays->philos[id].mutex);
-	return (ft_change_turns(first, second, id, l_philo));
+	philo->last_meal = ft_timestamp_ms();
+	philo->meals++;
+	return (ft_eat(philo));
 }

@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 15:29:52 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/07/31 10:18:36 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/08/01 14:22:08 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,10 @@ int	main(int argc, char **argv)
 	arrays = ft_arrays();
 	args->should_eat = -1;
 	ft_parse_args(args, argc, argv);
-	ft_allocate_philos(arrays, args);
-	ft_semaphores(args, arrays);
-	ft_forks(args);
-	return (ft_free_destroy_return(0));
+	ft_semaphores(arrays);
+	ft_forks(args, arrays);
+	sem_close(arrays->print_sem);
+	sem_close(arrays->forks);
+	ft_unlink_semaphores();
+	return (0);
 }
