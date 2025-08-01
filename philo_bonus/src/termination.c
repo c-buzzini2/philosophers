@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 10:36:47 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/08/01 13:55:07 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/08/01 16:35:09 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	ft_unlink_semaphores(void)
 		sem_unlink(name);
 		free(name);
 		free(id);
+		i++;
 	}
 	sem_unlink("/print_sem");
 	sem_unlink("/forks");

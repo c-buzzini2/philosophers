@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:32:58 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/08/01 14:35:18 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/08/01 16:08:27 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ int	ft_start_routine(t_philo *philo)
 	t_args		*args;
 
 	args = ft_args();
-	if (args->should_eat == 0)
-		return (0);
+	philo->meals = 0;
+	philo->last_meal = 0;
 	if (args->nb_philo == 1)
 		ft_single_philo(philo);
 	while (1)

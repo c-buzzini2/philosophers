@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:28:34 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/08/01 14:02:16 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/08/01 16:39:30 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,30 +45,23 @@ void	ft_kill_remaining_processes(t_pids *pids, t_args *args)
 int	ft_parent(t_args *args, t_pids *pids)
 {
 	int		e_status;
-	int		exited;
+	int		exited_pid;
 	int		e_code;
+	int		exited_count;
 
-	while (1)
+	exited_count = 0;
+	while (exited_count < args->nb_philo)
 	{
-		exited = waitpid(-1, &e_status, 0);
-		if (exited <= 0)
-			break ;
-		ft_change_boolean(pids, exited, args);
-		if (WIFEXITED(e_status)) 
+		exited_pid = waitpid(-1, &e_status, 0);
+		if (exited_pid > 0)
 		{
-    		e_code = WEXITSTATUS(e_status);
-    		if (e_code == 2) 
+			exited_count++;
+			ft_change_boolean(pids, exited_pid, args);
+			if (WIFEXITED(e_status)) 
 			{
-				ft_kill_remaining_processes(pids, args);
-				while (1)
-				{
-					exited = waitpid(-1, &e_status, 0);
-					if (exited <= 0)
-					{
-						free(pids);
-						return (0);
-					}
-    			}
+				e_code = WEXITSTATUS(e_status);
+				if (e_code == 2) 
+					ft_kill_remaining_processes(pids, args);
 			}
 		}
 	}

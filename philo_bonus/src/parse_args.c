@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 11:36:06 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/07/31 13:53:33 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/08/01 16:11:58 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,7 @@ int	ft_parse_args(t_args *args, int argc, char **argv)
 	args->sleep_time = ft_atoi(argv[4]);
 	if (argc == 6)
 		args->should_eat = ft_atoi(argv[5]);
+	if (args->should_eat == 0)
+		exit (0);
 	return (0);
 }
