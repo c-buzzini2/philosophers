@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:32:58 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/07/29 15:36:34 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/08/04 14:55:53 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,10 @@ int	ft_check_starvation(t_arrays *arrays, t_args *args)
 				done_eating++;
 			pthread_mutex_unlock(&arrays->philos[i].mutex);
 			if (done_eating == args->nb_philo)
+			{
+				args->meal_over = true;
 				return (0);
+			}
 			i++;
 		}
 		usleep(1000);

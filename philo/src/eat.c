@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:32:58 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/07/29 17:42:34 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/08/04 14:47:31 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,12 @@ static int	ft_change_turns(int first, int second, int id, int l_philo)
 	t_arrays	*arrays;
 
 	arrays = ft_arrays();
-	pthread_mutex_lock(&arrays->philos[id].turn_mutex);
-	arrays->philos[id].own_turn = 0;
-	pthread_mutex_unlock(&arrays->philos[id].turn_mutex);
-	pthread_mutex_lock(&arrays->philos[l_philo].turn_mutex);
-	arrays->philos[l_philo].own_turn = 1;
-	pthread_mutex_unlock(&arrays->philos[l_philo].turn_mutex);
+	pthread_mutex_lock(&arrays->waiters[id].turn_mutex);
+	arrays->waiters[id].total_meals++;
+	pthread_mutex_unlock(&arrays->waiters[id].turn_mutex);
+	pthread_mutex_lock(&arrays->waiters[l_philo].turn_mutex);
+	arrays->waiters[l_philo].total_meals++;
+	pthread_mutex_unlock(&arrays->waiters[l_philo].turn_mutex);
 	return (ft_eat(arrays, id, first, second));
 }
 
@@ -60,7 +60,6 @@ int	ft_grab_forks(int first, int second, int id, int l_philo)
 	t_arrays	*arrays;
 
 	arrays = ft_arrays();
-	pthread_mutex_unlock(&arrays->philos[l_philo].turn_mutex);
 	pthread_mutex_lock(&arrays->philos[first].fork);
 	if (ft_print(arrays, id, "has taken the first fork\n") == 2)
 	{

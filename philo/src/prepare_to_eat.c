@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:32:58 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/07/29 17:40:40 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/08/04 14:43:05 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,20 @@ static void	ft_check_turn(t_arrays *arrays, int id, int l_philo)
 {
 	while (1)
 	{
-		pthread_mutex_lock(&arrays->philos[id].turn_mutex);
-		if (arrays->philos[id].own_turn == 1)
+		pthread_mutex_lock(&arrays->waiters[id].turn_mutex);
+		if (arrays->waiters[id].left_turn == 1)
 		{
-			pthread_mutex_unlock(&arrays->philos[id].turn_mutex);
-			pthread_mutex_lock(&arrays->philos[l_philo].turn_mutex);
-			if (arrays->philos[l_philo].own_turn == 0)
+			pthread_mutex_unlock(&arrays->waiters[id].turn_mutex);
+			pthread_mutex_lock(&arrays->waiters[l_philo].turn_mutex);
+			if (arrays->waiters[l_philo].right_turn == 1)
+			{
+				pthread_mutex_unlock(&arrays->waiters[l_philo].turn_mutex);
 				return ;
-			pthread_mutex_unlock(&arrays->philos[l_philo].turn_mutex);
+			}
+			pthread_mutex_unlock(&arrays->waiters[l_philo].turn_mutex);
 		}
 		else
-			pthread_mutex_unlock(&arrays->philos[id].turn_mutex);
+			pthread_mutex_unlock(&arrays->waiters[id].turn_mutex);
 		usleep(100);
 	}
 }

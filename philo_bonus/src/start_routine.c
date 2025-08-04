@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:32:58 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/08/04 12:16:39 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/08/04 13:01:07 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ int	ft_start_routine(t_philo *philo)
 	t_args		*args;
 
 	args = ft_args();
-	philo->meals = 0; //why do I need to initialize these 3?
-	philo->last_meal = 0;
-	philo->death = false;
+	//philo->meals = 0; //why do I need to initialize these 3?
+	//philo->last_meal = 0;
+	//philo->death = false;
 	if (args->nb_philo == 1)
 		ft_single_philo(philo);
 	while (1)

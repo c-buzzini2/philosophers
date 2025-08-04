@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 15:30:37 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/07/29 17:42:55 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/08/04 14:55:01 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,15 @@
 # include <sys/time.h>
 # include <string.h>
 
+typedef struct	s_waiter
+{
+	bool	left_turn;
+	bool	right_turn;
+	pthread_mutex_t	turn_mutex;
+	int		total_meals;
+	//pthread_mutex_t	right_mutex;
+} t_waiter;
+
 typedef struct s_philo
 {
 	int				id;
@@ -29,8 +38,8 @@ typedef struct s_philo
 	int				meals;
 	long			last_meal;
 	pthread_mutex_t	mutex;
-	pthread_mutex_t	turn_mutex;
-	bool			own_turn;
+	//pthread_mutex_t	turn_mutex;
+	//bool			own_turn;
 }	t_philo;
 
 typedef struct s_args
@@ -42,8 +51,7 @@ typedef struct s_args
 	int				should_eat;
 	struct timeval	start_time;
 	bool			death;
-	bool			can_start;
-	int				done_eating;
+	bool			meal_over;
 }	t_args;
 
 typedef struct s_arrays
@@ -52,6 +60,8 @@ typedef struct s_arrays
 	pthread_mutex_t	print_mutex;
 	pthread_mutex_t	death_mutex;
 	t_philo			*philos;
+	t_waiter		*waiters;
+	pthread_t		maitre;
 }	t_arrays;
 
 int				ft_isdigit(int c);
@@ -75,5 +85,8 @@ int				ft_check_starvation(t_arrays *arrays, t_args *args);
 int				ft_check_death_flag(void);
 void			*ft_monitor(void *arg);
 void			ft_join_philos(void);
+void			*ft_maitre(void *arg);
+void			ft_allocate_waiters(t_arrays *arrays, t_args *args);
+void			ft_free_arrays(void);
 
 #endif

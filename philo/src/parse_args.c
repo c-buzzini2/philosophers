@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 11:36:06 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/07/29 13:54:12 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/08/04 14:22:00 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,41 @@ void	ft_set_turns(t_arrays *arrays, t_args *args)
 	while (i < args->nb_philo)
 	{
 		if (i % 2 != 0)
-			arrays->philos[i].own_turn = 1;
+		{
+			arrays->waiters[i].left_turn = 1;
+			arrays->waiters[i].right_turn = 0;	
+		}
 		else
-			arrays->philos[i].own_turn = 0;
+		{
+			arrays->waiters[i].left_turn = 0;
+			arrays->waiters[i].right_turn = 1;	
+		}
 		i++;
 	}
+}
+
+void	ft_allocate_waiters(t_arrays *arrays, t_args *args)
+{
+	int		i;
+
+	arrays->waiters = malloc((args->nb_philo) * sizeof(t_waiter));
+	if (arrays->waiters == NULL)
+	{
+		ft_puterror("Allocation error");
+		free(arrays->philos);
+		exit (1);
+	}
+	memset(arrays->philos, 0, (args->nb_philo) * sizeof(t_philo));
+	i = 0;
+	while (i < args->nb_philo)
+	{
+		arrays->philos[i].id = i;
+		i++;
+	}
+	i = 0;
+	while (i < args->nb_philo)
+		arrays->philos[i++].last_meal = 0;
+	ft_set_turns(arrays, args);
 }
 
 void	ft_allocate_philos(t_arrays *arrays, t_args *args)
@@ -76,7 +106,6 @@ void	ft_allocate_philos(t_arrays *arrays, t_args *args)
 	i = 0;
 	while (i < args->nb_philo)
 		arrays->philos[i++].last_meal = 0;
-	ft_set_turns(arrays, args);
 }
 
 int	ft_parse_args(t_args *args, int argc, char **argv)
