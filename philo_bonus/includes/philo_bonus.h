@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 15:30:37 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/08/01 14:07:50 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/08/04 12:14:15 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,9 @@
 # include <sys/time.h>
 # include <string.h>
 # include <signal.h>
-
+# include <pthread.h>
+# include <fcntl.h>
+# include <sys/wait.h>
 
 typedef struct s_philo
 {
@@ -33,6 +35,10 @@ typedef struct s_philo
 	char	turn_name[20];
 	char	l_name[20];
 	sem_t	*left_sem;
+	pthread_t		monitor;
+	pthread_mutex_t	monitor_mutex;
+	bool	death;
+	pthread_mutex_t	death_mutex;
 }	t_philo;
 
 typedef struct s_pids
@@ -81,7 +87,10 @@ int				ft_grab_forks(t_philo *philo);
 long			ft_timestamp_ms(void);
 int				ft_print(t_philo *philo, char *action);
 int				ft_sleep_and_think(t_philo *philo, t_args *args);
-int				ft_check_starvation(t_philo *philo);
+void			*ft_monitor(void *arg);
 void			ft_free_array(int *pids, t_args *args);
+int			ft_mutex_and_thread(t_philo *philo);
+int				ft_check_death_flag(void);
+
 
 #endif

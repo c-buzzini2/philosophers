@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:32:58 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/08/01 15:52:44 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/08/04 12:18:56 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	ft_eat(t_philo *philo)
 	ret = 0;
 	while (ft_timestamp_ms() - philo->last_meal < args->eat_time)
 	{
-		if (ft_check_starvation(philo) == 2)
+		if (ft_check_death_flag() == 2)
 		{
 			ret = 2;
 			break ;
@@ -47,7 +47,9 @@ int	ft_grab_forks(t_philo *philo)
 			|| ft_print(philo, "has taken the second fork\n") == 2
 			|| ft_print(philo, "is eating\n") == 2)
 		return (2);
+	pthread_mutex_lock(&philo->monitor_mutex);
 	philo->last_meal = ft_timestamp_ms();
+	pthread_mutex_unlock(&philo->monitor_mutex);
 	philo->meals++;
 	return (ft_eat(philo));
 }

@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:28:34 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/08/01 16:39:30 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/08/04 12:24:00 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	ft_parent(t_args *args, t_pids *pids)
 			if (WIFEXITED(e_status)) 
 			{
 				e_code = WEXITSTATUS(e_status);
-				if (e_code == 2) 
+				if (e_code == 2 || e_code == 3) 
 					ft_kill_remaining_processes(pids, args);
 			}
 		}
@@ -83,7 +83,7 @@ t_pids	*ft_allocate_pids(t_args *args, t_arrays *arrays)
 	pids = malloc(args->nb_philo * sizeof(t_pids));
 	if (pids == NULL)
 	{
-		perror("Error in the fork");
+		perror("Error in allocation");
 		sem_close(arrays->print_sem);
 		sem_close(arrays->forks);
 		ft_unlink_semaphores();
@@ -98,7 +98,7 @@ int	ft_forks(t_args *args, t_arrays *arrays)
 	int		forks;
 	t_philo	*philo;
 	t_pids	*pids;
-	int		i;
+	int		i;		
 
 	i = 0;
 	forks = 0;
@@ -120,6 +120,8 @@ int	ft_forks(t_args *args, t_arrays *arrays)
 			free(pids);
 			philo = ft_create_philo();
 			philo->id = forks;
+			if (ft_mutex_and_thread(philo) == 1)
+				return (3);
 			ft_open_turn_sems(philo, args);
 			ft_start_routine(philo);
 		}
