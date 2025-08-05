@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:32:58 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/08/04 15:05:57 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/08/05 10:58:57 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,20 @@ int	ft_control_turns(t_arrays *arrays, t_args *args)
 	while (1)
 	{
 		i = 0;
-		if (args->meal_over == true || args->death == true)
+		pthread_mutex_lock(&arrays->meal_mutex);
+		if (args->meal_over == true)
+		{
+			pthread_mutex_unlock(&arrays->meal_mutex);
 			return (0);
+		}
+		pthread_mutex_unlock(&arrays->meal_mutex);
+		pthread_mutex_lock(&arrays->death_mutex);
+		if (args->death == true)
+		{
+			pthread_mutex_unlock(&arrays->death_mutex);
+			return (2);
+		}
+		pthread_mutex_unlock(&arrays->death_mutex);
 		while (i < args->nb_philo)
 		{
 			if (i % 2 != 0)
