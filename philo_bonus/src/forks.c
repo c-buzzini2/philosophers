@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:28:34 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/08/07 12:47:39 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/08/07 14:47:11 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ int	ft_parent(t_args *args, t_pids *pids)
 			if (WIFEXITED(e_status)) 
 			{
 				e_code = WEXITSTATUS(e_status);
+				//printf("exit code: %d\n", e_code);
 				if (e_code == 2 || e_code == 3) 
 					ft_kill_remaining_processes(pids, args);
 			}
@@ -73,15 +74,15 @@ int	ft_parent(t_args *args, t_pids *pids)
 	//waiter = ft_init_waiter();
 	//long timestamp = ft_timestamp_ms();
 	//printf("%ld: processes exited\n", timestamp);
-	
-	
 	//printf("processes exited\n");
+
+	
 	pthread_mutex_lock(&args->waiter.waiter_mutex);
 	args->waiter.kill_waiter = true;
 	pthread_mutex_unlock(&args->waiter.waiter_mutex);
 	sem_post(args->waiter_sem);
 	sem_post(args->waiter_sem);
-	pthread_join(args->waiter.w_thread, NULL);
+	// pthread_join(args->waiter.w_thread, NULL);
 	free(pids);
 	ft_close_arr_sems();
 	pthread_mutex_destroy(&args->waiter.waiter_mutex);

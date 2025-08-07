@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:32:58 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/08/07 11:33:45 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/08/07 14:47:25 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,18 @@
 
 static int	ft_single_philo(t_philo *philo)
 {
+	t_args			*args;
+
+	args = ft_args();
 	ft_print(philo, "has taken the first fork\n");
-	return (ft_eat(philo));
+	usleep(args->die_time * 1000);
+	while (1)
+	{
+		if (ft_check_death_flag() == 2)
+			return (2) ;
+		usleep(1000);
+	}
+	return (0);
 }
 
 long	ft_timestamp_ms(void)
@@ -45,13 +55,16 @@ int	ft_start_routine(t_philo *philo)
 		usleep(100); // Small delay to avoid busy waiting
 	}
 	
-	long timestamp = ft_timestamp_ms();
-	printf("%ld: P%d starting routine\n", timestamp, philo->id + 1);
+	//long timestamp = ft_timestamp_ms();
+	//printf("%ld: P%d starting routine\n", timestamp, philo->id + 1);
 	//philo->meals = 0; //why do I need to initialize these 3?
 	//philo->last_meal = 0;
 	//philo->death = false;
 	if (args->nb_philo == 1)
-		ft_single_philo(philo);
+	{
+		ft_single_philo(philo);	
+		exit (ft_close_semaphores(2));
+	}
 	while (1)
 	{
 		if (ft_grab_forks(philo) == 2)
