@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:28:34 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/08/07 11:34:45 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/08/07 12:47:39 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,11 @@ int	ft_forks(t_args *args)
 	pids = ft_allocate_pids(args);
 	ft_allocate_waiter_arrays(args);//error check
 	gettimeofday(&args->start_time, NULL);
+	args->start_time.tv_usec += 5000; // Add 5ms delay
+	if (args->start_time.tv_usec >= 1000000) {
+		args->start_time.tv_sec += 1;
+		args->start_time.tv_usec -= 1000000;
+	}
 	while (forks < args->nb_philo)
 	{
 		id = fork();

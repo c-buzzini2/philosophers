@@ -34,6 +34,19 @@ int	ft_start_routine(t_philo *philo)
 	t_args		*args;
 
 	args = ft_args();
+	
+	// Wait for synchronized start
+	struct timeval current;
+	while (1) {
+		gettimeofday(&current, NULL);
+		if (current.tv_sec > args->start_time.tv_sec || 
+			(current.tv_sec == args->start_time.tv_sec && current.tv_usec >= args->start_time.tv_usec))
+			break;
+		usleep(100); // Small delay to avoid busy waiting
+	}
+	
+	long timestamp = ft_timestamp_ms();
+	printf("%ld: P%d starting routine\n", timestamp, philo->id + 1);
 	//philo->meals = 0; //why do I need to initialize these 3?
 	//philo->last_meal = 0;
 	//philo->death = false;
