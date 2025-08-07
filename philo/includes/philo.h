@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 15:30:37 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/08/05 10:49:43 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/08/05 17:03:09 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,6 @@ typedef struct s_philo
 	int				meals;
 	long			last_meal;
 	pthread_mutex_t	mutex;
-	//pthread_mutex_t	turn_mutex;
-	//bool			own_turn;
 }	t_philo;
 
 typedef struct s_args

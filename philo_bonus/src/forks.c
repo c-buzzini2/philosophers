@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:28:34 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/08/04 12:24:00 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/08/06 21:13:54 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int	ft_parent(t_args *args, t_pids *pids)
 	int		exited_pid;
 	int		e_code;
 	int		exited_count;
+	//t_waiter	*waiter;
 
 	exited_count = 0;
 	while (exited_count < args->nb_philo)
@@ -65,7 +66,15 @@ int	ft_parent(t_args *args, t_pids *pids)
 			}
 		}
 	}
+	//waiter = ft_init_waiter();
+	pthread_mutex_lock(&args->waiter.waiter_mutex);
+	args->waiter.kill_waiter = true;
+	pthread_mutex_unlock(&args->waiter.waiter_mutex);
+	sem_post(args->waiter_sem);
 	free(pids);
+	ft_close_arr_sems();
+	pthread_mutex_destroy(&args->waiter.waiter_mutex);
+	pthread_join(args->waiter.w_thread, NULL);
 	return (0);
 }
 
@@ -76,7 +85,7 @@ t_philo	*ft_create_philo(void)
 	return (&philo);
 }
 
-t_pids	*ft_allocate_pids(t_args *args, t_arrays *arrays)
+t_pids	*ft_allocate_pids(t_args *args)
 {
 	t_pids	*pids;
 	
@@ -84,15 +93,14 @@ t_pids	*ft_allocate_pids(t_args *args, t_arrays *arrays)
 	if (pids == NULL)
 	{
 		perror("Error in allocation");
-		sem_close(arrays->print_sem);
-		sem_close(arrays->forks);
+		sem_close(args->print_sem);
 		ft_unlink_semaphores();
 		exit(1);
 	}
 	return (pids);
 }
 
-int	ft_forks(t_args *args, t_arrays *arrays)
+int	ft_forks(t_args *args)
 {
 	int		id;
 	int		forks;
@@ -102,7 +110,8 @@ int	ft_forks(t_args *args, t_arrays *arrays)
 
 	i = 0;
 	forks = 0;
-	pids = ft_allocate_pids(args, arrays);
+	pids = ft_allocate_pids(args);
+	ft_allocate_waiter_arrays(args);//error check
 	gettimeofday(&args->start_time, NULL);
 	while (forks < args->nb_philo)
 	{
@@ -110,19 +119,19 @@ int	ft_forks(t_args *args, t_arrays *arrays)
 		if (id == -1)
 		{
 			perror("Error in the fork");
-			sem_close(arrays->print_sem);
-			sem_close(arrays->forks);
+			sem_close(args->print_sem);
 			ft_unlink_semaphores();
 			exit(1);
 		}
 		if (id == 0)
 		{
 			free(pids);
+			ft_close_arr_sems();
 			philo = ft_create_philo();
 			philo->id = forks;
 			if (ft_mutex_and_thread(philo) == 1)
 				return (3);
-			ft_open_turn_sems(philo, args);
+			ft_open_turn_sems(philo);
 			ft_start_routine(philo);
 		}
 		else
@@ -133,5 +142,6 @@ int	ft_forks(t_args *args, t_arrays *arrays)
 		forks++;
 		i++;
 	}
+	ft_waiter(args);//handle error return 1
 	return (ft_parent(args, pids));
 }

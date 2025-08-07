@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:32:58 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/08/04 12:24:16 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/08/06 13:57:02 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	ft_mutex_and_thread(t_philo *philo)
 	return (0);
 }
 
-static int	ft_check_starvation(t_arrays *arrays, t_args *args, t_philo *philo)
+static int	ft_check_starvation(t_args *args, t_philo *philo)
 {
 	long	timestamp;
 
@@ -57,7 +57,7 @@ static int	ft_check_starvation(t_arrays *arrays, t_args *args, t_philo *philo)
 		pthread_mutex_lock(&philo->monitor_mutex);
 		if (timestamp - philo->last_meal > args->die_time)
 		{
-			sem_wait(arrays->print_sem);
+			sem_wait(args->print_sem);
 			printf("%ld: P%d %s", timestamp, philo->id + 1, "died\n");
 			pthread_mutex_unlock(&philo->monitor_mutex);
 			pthread_mutex_lock(&philo->death_mutex);
@@ -73,14 +73,12 @@ static int	ft_check_starvation(t_arrays *arrays, t_args *args, t_philo *philo)
 
 void	*ft_monitor(void *arg)
 {
-	t_arrays	*arrays;
 	t_args		*args;
 	t_philo		*philo;
 
 	(void)arg;
-	arrays = ft_arrays();
 	args = ft_args();
 	philo = ft_create_philo();
-	ft_check_starvation(arrays, args, philo);
+	ft_check_starvation(args, philo);
 	return (NULL);
 }

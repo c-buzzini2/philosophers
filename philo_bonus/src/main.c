@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 15:29:52 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/08/01 16:39:53 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/08/07 10:28:37 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,26 +19,18 @@ t_args	*ft_args(void)
 	return (&args);
 }
 
-t_arrays	*ft_arrays(void)
-{
-	static t_arrays	arrays;
-
-	return (&arrays);
-}
-
 int	main(int argc, char **argv)
 {
 	t_args		*args;
-	t_arrays	*arrays;
 
 	args = ft_args();
-	arrays = ft_arrays();
 	args->should_eat = -1;
 	ft_parse_args(args, argc, argv);
-	ft_semaphores(arrays);
-	ft_forks(args, arrays);
-	sem_close(arrays->print_sem);
-	sem_close(arrays->forks);
+	ft_unlink_semaphores();
+	ft_print_semaphore(args);
+	ft_forks(args);
+	sem_close(args->print_sem);
+	sem_close(args->waiter_sem);
 	ft_unlink_semaphores();
 	return (0);
 }

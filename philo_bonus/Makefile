@@ -6,7 +6,7 @@
 #    By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/24 12:59:11 by cbuzzini          #+#    #+#              #
-#    Updated: 2025/08/04 10:52:28 by cbuzzini         ###   ########.fr        #
+#    Updated: 2025/08/06 10:21:24 by cbuzzini         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,8 @@ SRC_FILES = main.c \
 			sleep.c \
 			utils.c \
 			ft_itoa.c \
-			monitors.c
+			monitors.c \
+			waiter.c
 
 SRC = $(addprefix $(SRC_DIR), $(SRC_FILES))
 OBJ_FILES = $(addprefix $(OBJ_DIR), $(SRC_FILES:.c=.o))

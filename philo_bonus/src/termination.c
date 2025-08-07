@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 10:36:47 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/08/04 12:11:58 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/08/06 21:15:53 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,22 +31,41 @@ void	ft_unlink_semaphores(void)
 		i++;
 	}
 	sem_unlink("/print_sem");
-	sem_unlink("/forks");
+	sem_unlink("/waiter_sem");
 }
 
 int	ft_close_semaphores(int ret) //only for children!!!!!!
 {
-	t_arrays	*arrays;
 	t_philo		*philo;
+	t_args		*args;
 
 	philo = ft_create_philo();
-	arrays = ft_arrays();
+	args = ft_args();
 	sem_close(philo->turn_sem);
-	sem_close(philo->left_sem);
-	sem_close(arrays->print_sem);
-	sem_close(arrays->forks);
+	sem_close(args->print_sem);
+	sem_close(args->waiter_sem);
 	pthread_mutex_destroy(&philo->monitor_mutex);
 	pthread_mutex_destroy(&philo->death_mutex);
 	pthread_join(philo->monitor, NULL);
 	return (ret);
+}
+
+void	ft_close_arr_sems(void) // only parent!!!!!!
+{
+	int i;
+	//t_waiter	*waiter;
+	t_args		*args;
+
+	args = ft_args();
+	//waiter = ft_init_waiter();
+	i = 0;
+	while (i < args->nb_philo)
+	{
+		sem_close(args->waiter.philo_sems[i]);
+		//sem_unlink(waiter->sem_names[i]);
+		free(args->waiter.sem_names[i]);
+		i++;
+	}
+	free(args->waiter.philo_sems);
+	free(args->waiter.sem_names);
 }
