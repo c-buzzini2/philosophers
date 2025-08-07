@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:32:58 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/08/06 13:08:19 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/08/07 11:33:45 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,11 @@ int	ft_start_routine(t_philo *philo)
 		if (ft_grab_forks(philo) == 2)
 			exit (ft_close_semaphores(2));
 		if (philo->meals == args->should_eat)
+		{
+			//long timestamp = ft_timestamp_ms();
+			//printf("%ld: P%d done eating\n", timestamp, philo->id + 1);
 			exit (ft_close_semaphores(0));
+		}
 		if (ft_check_death_flag() == 2
 			|| ft_sleep_and_think(philo, args) == 2
 			|| ft_check_death_flag() == 2)

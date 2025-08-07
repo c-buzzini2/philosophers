@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:32:58 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/08/07 10:38:46 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/08/07 11:51:13 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	*ft_control_turns(void *arg)
 			pthread_mutex_lock(&args->waiter.waiter_mutex);
 			if (args->waiter.kill_waiter == true)
 			{
+				//printf("exiting\n");
 				pthread_mutex_unlock(&args->waiter.waiter_mutex);
 				return (NULL);
 			}
