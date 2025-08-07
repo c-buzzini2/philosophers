@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 15:30:37 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/08/06 21:12:41 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/08/07 17:50:39 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,9 @@ typedef struct s_philo
 	int		meals;
 	long	last_meal;
 	sem_t	*turn_sem;
-	char	turn_name[20];	
+	char	turn_name[20];
+	sem_t			*waiter_sem;
+	char			waiter_name[22];
 	pthread_t		monitor;
 	pthread_mutex_t	monitor_mutex;
 	bool	death;
@@ -47,11 +49,12 @@ typedef struct s_pids
 
 typedef struct s_waiter
 {
-	sem_t			**philo_sems;
-	pthread_t		w_thread;
-	char			**sem_names;
-	bool			kill_waiter;
-	pthread_mutex_t	waiter_mutex;
+	sem_t			*philo_sem;
+	char			philo_name[20];
+	sem_t			*left_sem;
+	char			left_name[20];
+	sem_t			*my_sem;
+	char			my_name[22];
 }	t_waiter;
 
 typedef struct s_args
@@ -63,8 +66,14 @@ typedef struct s_args
 	int				should_eat;
 	struct timeval	start_time;
 	sem_t			*print_sem;
-	sem_t			*waiter_sem;
-	t_waiter		waiter;
+	t_waiter		*waiters;
+	pthread_t		*w_threads;
+	bool			kill_waiters;
+	pthread_mutex_t	kill_mutex;
+	char			**philo_sems_names;
+	char			**waiter_sems_names;
+	sem_t			**all_philo_sems;
+	sem_t			**all_waiter_sems;
 }	t_args;
 
 
@@ -74,10 +83,10 @@ int				ft_parse_args(t_args *args, int argc, char **argv);
 t_philo			*ft_create_philo(void);
 void			ft_puterror(char *s);
 t_args			*ft_args(void);
-int				ft_close_semaphores(int ret);
+int				ft_close_philos(int ret);
 void			ft_unlink_semaphores(void);
 void			ft_print_semaphore(t_args *args);
-void			ft_open_turn_sems(t_philo *philo);
+void			ft_open_philo_sems(t_philo *philo);
 unsigned int	ft_strlcpy(char *dst, const char *src, size_t size);
 unsigned int	ft_strlcat(char *dst, const char *src, unsigned int size);
 void			ft_bzero(void *s, size_t n);
@@ -95,10 +104,12 @@ void			*ft_monitor(void *arg);
 void			ft_free_array(int *pids, t_args *args);
 int				ft_mutex_and_thread(t_philo *philo);
 int				ft_check_death_flag(void);
-void			ft_close_arr_sems(void);
+void			ft_close_parent(void);
 t_waiter		*ft_init_waiter();
 int				ft_waiter(t_args *args);
 int				ft_allocate_waiter_arrays(t_args *args);
+int				ft_close_waiters(int id);
+void			ft_open_waiter_sems(int i);
 
 
 #endif

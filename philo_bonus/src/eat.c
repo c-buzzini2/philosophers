@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:32:58 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/08/06 13:45:24 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/08/07 17:39:25 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	ft_eat(t_philo *philo)
 		else
 			usleep(5000);
 	}
-	sem_post(args->waiter_sem);
+	sem_post(philo->waiter_sem);
 	return (ret);
 }
 
