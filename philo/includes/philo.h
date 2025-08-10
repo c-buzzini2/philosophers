@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 15:30:37 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/08/05 17:03:09 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/08/10 10:27:53 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,13 @@
 # include <sys/time.h>
 # include <string.h>
 
-typedef struct	s_waiter
+typedef struct s_waiter
 {
-	bool	left_turn;
-	bool	right_turn;
+	bool			left_turn;
+	bool			right_turn;
 	pthread_mutex_t	turn_mutex;
-	int		total_meals;
-	//pthread_mutex_t	right_mutex;
-} t_waiter;
+	int				total_meals;
+}	t_waiter;
 
 typedef struct s_philo
 {

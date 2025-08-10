@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 11:36:06 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/08/05 10:46:31 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/08/10 10:28:32 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,12 @@ void	ft_set_turns(t_arrays *arrays, t_args *args)
 		if (i % 2 != 0)
 		{
 			arrays->waiters[i].left_turn = 1;
-			arrays->waiters[i].right_turn = 0;	
+			arrays->waiters[i].right_turn = 0;
 		}
 		else
 		{
 			arrays->waiters[i].left_turn = 0;
-			arrays->waiters[i].right_turn = 1;	
+			arrays->waiters[i].right_turn = 1;
 		}
 		i++;
 	}

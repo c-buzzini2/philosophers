@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 15:29:52 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/08/04 14:56:29 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/08/10 10:51:10 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,11 @@ int	main(int argc, char **argv)
 	args = ft_args();
 	arrays = ft_arrays();
 	args->should_eat = -1;
-	args->death = false; //do I need those two????
+	args->death = false;
 	args->meal_over = false;
 	ft_parse_args(args, argc, argv);
+	if (args->should_eat == 0)
+		return (0);
 	ft_allocate_philos(arrays, args);
 	ft_allocate_waiters(arrays, args);
 	ft_mutexes(args, arrays);
