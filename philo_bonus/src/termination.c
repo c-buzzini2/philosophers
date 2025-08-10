@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 10:36:47 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/08/07 17:52:45 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/08/07 11:09:26 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,14 @@ void	ft_unlink_semaphores(void)
 		name = ft_strjoin("/turn_id_", id);
 		sem_unlink(name);
 		free(name);
-		name = ft_strjoin("/waiter_id_", id);
-		sem_unlink(name);
-		free(name);
 		free(id);
 		i++;
 	}
 	sem_unlink("/print_sem");
+	sem_unlink("/waiter_sem");
 }
 
-int	ft_close_philos(int ret) //only for children!!!!!!
+int	ft_close_semaphores(int ret) //only for children!!!!!!
 {
 	t_philo		*philo;
 	t_args		*args;
@@ -45,48 +43,29 @@ int	ft_close_philos(int ret) //only for children!!!!!!
 	args = ft_args();
 	sem_close(philo->turn_sem);
 	sem_close(args->print_sem);
-	sem_close(philo->waiter_sem);
+	sem_close(args->waiter_sem);
 	pthread_mutex_destroy(&philo->monitor_mutex);
 	pthread_mutex_destroy(&philo->death_mutex);
 	//pthread_join(philo->monitor, NULL);
 	return (ret);
 }
 
-void	ft_close_parent(void) // only parent!!!!!!
+void	ft_close_arr_sems(void) // only parent!!!!!!
 {
 	int i;
+	//t_waiter	*waiter;
 	t_args		*args;
 
 	args = ft_args();
+	//waiter = ft_init_waiter();
 	i = 0;
-	sem_close(args->print_sem);
 	while (i < args->nb_philo)
 	{
-		sem_close(args->all_philo_sems[i]);
-		sem_close(args->all_waiter_sems[i]);
-		free(args->waiter_sems_names[i]);
-		free(args->philo_sems_names[i]);
+		sem_close(args->waiter.philo_sems[i]);
+		//sem_unlink(waiter->sem_names[i]);
+		free(args->waiter.sem_names[i]);
 		i++;
 	}
-	free(args->waiters);
-	free(args->w_threads);
-	free(args->all_philo_sems);
-	free(args->all_waiter_sems);
-	free(args->waiter_sems_names);
-	free(args->philo_sems_names);
-}
-
-
-int	ft_close_waiters(int id)
-{
-	t_philo		*philo;
-	t_args		*args;
-
-	philo = ft_create_philo();
-	args = ft_args();
-	sem_close(args->waiters[id].philo_sem);
-	sem_close(args->print_sem);
-	sem_close(args->waiters[id].left_sem);
-	sem_close(args->waiters[id].my_sem);
-	return (0);
+	free(args->waiter.philo_sems);
+	free(args->waiter.sem_names);
 }

@@ -6,7 +6,7 @@
 #    By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/24 12:59:11 by cbuzzini          #+#    #+#              #
-#    Updated: 2025/08/07 14:24:16 by cbuzzini         ###   ########.fr        #
+#    Updated: 2025/08/06 10:21:24 by cbuzzini         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,7 @@ OBJ_FILES = $(addprefix $(OBJ_DIR), $(SRC_FILES:.c=.o))
 
 CC = cc 
 FLAGS = -g -Wall -Wextra -Werror
-NAME = philo#_bonus
+NAME = philo_bonus
 
 all: $(NAME)
 

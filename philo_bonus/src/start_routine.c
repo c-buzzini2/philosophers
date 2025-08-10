@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:32:58 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/08/07 16:46:10 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/08/10 11:26:05 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,40 +44,24 @@ int	ft_start_routine(t_philo *philo)
 	t_args		*args;
 
 	args = ft_args();
-	
-	// Wait for synchronized start
-	struct timeval current;
-	while (1) {
-		gettimeofday(&current, NULL);
-		if (current.tv_sec > args->start_time.tv_sec || 
-			(current.tv_sec == args->start_time.tv_sec && current.tv_usec >= args->start_time.tv_usec))
-			break;
-		usleep(100); // Small delay to avoid busy waiting
-	}
-	
-	//long timestamp = ft_timestamp_ms();
-	//printf("%ld: P%d starting routine\n", timestamp, philo->id + 1);
 	//philo->meals = 0; //why do I need to initialize these 3?
 	//philo->last_meal = 0;
 	//philo->death = false;
 	if (args->nb_philo == 1)
-	{
-		ft_single_philo(philo);	
-		exit (ft_close_philos(2));
-	}
+		ft_single_philo(philo);
 	while (1)
 	{
 		if (ft_grab_forks(philo) == 2)
-			exit (ft_close_philos(2));
+			exit (ft_close_semaphores(2));
 		if (philo->meals == args->should_eat)
 		{
 			//long timestamp = ft_timestamp_ms();
 			//printf("%ld: P%d done eating\n", timestamp, philo->id + 1);
-			exit (ft_close_philos(0));
+			exit (ft_close_semaphores(0));
 		}
 		if (ft_check_death_flag() == 2
 			|| ft_sleep_and_think(philo, args) == 2
 			|| ft_check_death_flag() == 2)
-			exit (ft_close_philos(2));
+			exit (ft_close_semaphores(2));
 	}
 }

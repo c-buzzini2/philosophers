@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 14:22:21 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/08/07 12:44:29 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/08/06 10:16:33 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ int	ft_print(t_philo *philo, char *action)
 	t_args		*args;
 
 	args = ft_args();
+	timestamp = ft_timestamp_ms();
 	if (ft_check_death_flag() == 2)
 		return (2);
 	sem_wait(args->print_sem);
-	timestamp = ft_timestamp_ms();
 	printf("%ld: P%d %s", timestamp, philo->id + 1, action);
 	sem_post(args->print_sem);
 	return (0);
