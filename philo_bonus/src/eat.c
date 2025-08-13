@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:32:58 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/08/06 13:45:24 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/08/13 11:19:25 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ int	ft_eat(t_philo *philo)
 
 int	ft_grab_forks(t_philo *philo)
 {
+	if (ft_check_death_flag() == 2)
+		return (2);
 	sem_wait(philo->turn_sem);
 	if (ft_print(philo, "has taken the first fork\n") == 2
 			|| ft_print(philo, "has taken the second fork\n") == 2

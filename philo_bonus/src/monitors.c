@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:32:58 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/08/06 13:57:02 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/08/13 12:33:22 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,11 @@ static int	ft_check_starvation(t_args *args, t_philo *philo)
 	{
 		timestamp = ft_timestamp_ms();
 		pthread_mutex_lock(&philo->monitor_mutex);
+		if (philo->done_eating == true)
+		{
+			pthread_mutex_unlock(&philo->monitor_mutex);
+			return (0);
+		}
 		if (timestamp - philo->last_meal > args->die_time)
 		{
 			sem_wait(args->print_sem);
@@ -63,7 +68,7 @@ static int	ft_check_starvation(t_args *args, t_philo *philo)
 			pthread_mutex_lock(&philo->death_mutex);
 			philo->death = true;
 			pthread_mutex_unlock(&philo->death_mutex);
-			return (2);
+			exit (ft_close_semaphores(2));
 		}
 		pthread_mutex_unlock(&philo->monitor_mutex);
 		usleep(3000);

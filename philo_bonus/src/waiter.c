@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:32:58 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/08/07 11:51:13 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/08/13 12:41:48 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ void	*ft_control_turns(void *arg)
 	// waiter = ft_init_waiter();
 	(void)arg;
 	args = ft_args();
+	if (args->nb_philo == 1)
+		return (NULL);
 	start = 2 % args->nb_philo;
 	while (1)
 	{

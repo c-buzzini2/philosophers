@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 15:30:37 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/08/06 21:12:41 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/08/13 10:53:05 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,16 @@
 
 typedef struct s_philo
 {
-	int		id;
-	int		meals;
-	long	last_meal;
-	sem_t	*turn_sem;
-	char	turn_name[20];	
+	int				id;
+	int				meals;
+	long			last_meal;
+	sem_t			*turn_sem;
+	char			turn_name[20];	
 	pthread_t		monitor;
 	pthread_mutex_t	monitor_mutex;
-	bool	death;
+	bool			death;
 	pthread_mutex_t	death_mutex;
+	bool			done_eating;
 }	t_philo;
 
 typedef struct s_pids

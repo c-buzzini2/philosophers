@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:32:58 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/08/10 11:26:05 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/08/13 12:33:10 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@ static int	ft_single_philo(t_philo *philo)
 
 	args = ft_args();
 	ft_print(philo, "has taken the first fork\n");
-	usleep(args->die_time * 1000);
+	//usleep(args->die_time * 1000);
 	while (1)
 	{
 		if (ft_check_death_flag() == 2)
-			return (2) ;
+			break;
 		usleep(1000);
 	}
 	return (0);
@@ -48,13 +48,17 @@ int	ft_start_routine(t_philo *philo)
 	//philo->last_meal = 0;
 	//philo->death = false;
 	if (args->nb_philo == 1)
-		ft_single_philo(philo);
+		return (ft_single_philo(philo));
 	while (1)
 	{
 		if (ft_grab_forks(philo) == 2)
 			exit (ft_close_semaphores(2));
 		if (philo->meals == args->should_eat)
 		{
+			pthread_mutex_lock(&philo->monitor_mutex);
+			philo->done_eating = true;
+			pthread_mutex_unlock(&philo->monitor_mutex);
+			pthread_join(philo->monitor, NULL);
 			//long timestamp = ft_timestamp_ms();
 			//printf("%ld: P%d done eating\n", timestamp, philo->id + 1);
 			exit (ft_close_semaphores(0));
