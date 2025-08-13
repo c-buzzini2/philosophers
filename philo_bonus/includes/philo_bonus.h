@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 15:30:37 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/08/13 10:53:05 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/08/13 13:23:56 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include <pthread.h>
 # include <fcntl.h>
 # include <sys/wait.h>
+# include <limits.h>
 
 typedef struct s_philo
 {
@@ -59,8 +60,8 @@ typedef struct s_args
 {
 	int				nb_philo;
 	int				die_time;
-	unsigned int	eat_time;
-	unsigned int	sleep_time;
+	int				eat_time;
+	int				sleep_time;
 	int				should_eat;
 	struct timeval	start_time;
 	sem_t			*print_sem;
@@ -70,7 +71,7 @@ typedef struct s_args
 
 
 int				ft_isdigit(int c);
-unsigned int	ft_atoi(const char *nptr);
+int	ft_atoi(const char *nptr);
 int				ft_parse_args(t_args *args, int argc, char **argv);
 t_philo			*ft_create_philo(void);
 void			ft_puterror(char *s);

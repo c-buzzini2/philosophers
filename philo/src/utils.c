@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 11:36:06 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/07/29 13:53:03 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/08/13 13:28:07 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@ int	ft_isdigit(int c)
 		return (0);
 }
 
-unsigned int	ft_atoi(const char *nptr)
+int	ft_atoi(const char *nptr)
 {
-	int	i;
-	int	neg;
-	int	nb;
+	int		i;
+	int		neg;
+	long	nb;
 
 	i = 0;
 	nb = 0;
@@ -42,5 +42,7 @@ unsigned int	ft_atoi(const char *nptr)
 		nb = nb * 10 + (nptr[i] - '0');
 		i++;
 	}
-	return (nb * neg);
+	if (nb > INT_MAX || nb < INT_MIN)
+		return (-2);
+	return ((int)nb * neg);
 }

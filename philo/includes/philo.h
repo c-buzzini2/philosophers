@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 15:30:37 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/08/10 10:27:53 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/08/13 13:27:33 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <stdbool.h>
 # include <sys/time.h>
 # include <string.h>
+# include <limits.h>
 
 typedef struct s_waiter
 {
@@ -43,8 +44,8 @@ typedef struct s_args
 {
 	int				nb_philo;
 	int				die_time;
-	unsigned int	eat_time;
-	unsigned int	sleep_time;
+	int				eat_time;
+	int				sleep_time;
 	int				should_eat;
 	struct timeval	start_time;
 	bool			death;
