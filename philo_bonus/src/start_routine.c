@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:32:58 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/08/13 15:18:32 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/08/13 16:40:06 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static int	ft_single_philo(t_philo *philo)
 
 	args = ft_args();
 	ft_print(philo, "has taken the first fork\n");
-	//usleep(args->die_time * 1000);
+	usleep(args->die_time * 1000);
 	while (1)
 	{
 		if (ft_check_death_flag() == 2)

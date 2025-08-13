@@ -6,13 +6,13 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:28:34 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/08/13 15:10:17 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/08/13 16:39:06 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
 
-void	ft_open_turn_sems(t_philo *philo)
+int	ft_open_turn_sems(t_philo *philo)
 {
 	char	*id;
 
@@ -27,8 +27,9 @@ void	ft_open_turn_sems(t_philo *philo)
 	if (philo->turn_sem == SEM_FAILED)
 	{
 		perror("sem_open failed\n");
-		exit(1); //graceful termination
+		return (1);
 	}
+	return (0);
 }
 
 void	ft_print_semaphore(t_args *args)

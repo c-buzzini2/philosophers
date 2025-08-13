@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:28:34 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/08/13 16:33:40 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/08/13 16:37:44 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,8 @@ int	ft_forks(t_args *args, int forks, t_pids *pids, int i)
 		philo->id = forks;
 		if (ft_mutex_and_thread(philo) == 1)
 			return (3);
-		ft_open_turn_sems(philo);
+		if (ft_open_turn_sems(philo) == 1)
+			return (3);
 		ft_start_routine(philo);
 	}
 	else

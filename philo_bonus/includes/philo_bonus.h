@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 15:30:37 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/08/13 16:32:14 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/08/13 16:38:16 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ t_args			*ft_args(void);
 int				ft_close_semaphores(int ret);
 void			ft_unlink_semaphores(void);
 void			ft_print_semaphore(t_args *args);
-void			ft_open_turn_sems(t_philo *philo);
+int				ft_open_turn_sems(t_philo *philo);
 unsigned int	ft_strlcpy(char *dst, const char *src, size_t size);
 unsigned int	ft_strlcat(char *dst, const char *src, unsigned int size);
 void			ft_bzero(void *s, size_t n);
