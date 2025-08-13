@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 15:30:37 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/08/13 13:27:33 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/08/13 13:31:59 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ typedef struct s_arrays
 }	t_arrays;
 
 int				ft_isdigit(int c);
-unsigned int	ft_atoi(const char *nptr);
+int	ft_atoi(const char *nptr);
 int				ft_parse_args(t_args *args, int argc, char **argv);
 void			ft_allocate_philos(t_arrays *arrays, t_args *args);
 void			ft_puterror(char *s);
