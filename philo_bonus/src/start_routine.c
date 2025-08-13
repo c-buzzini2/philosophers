@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:32:58 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/08/13 12:33:10 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/08/13 13:56:02 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int	ft_single_philo(t_philo *philo)
 			break;
 		usleep(1000);
 	}
-	return (0);
+	exit (ft_close_semaphores(2));
 }
 
 long	ft_timestamp_ms(void)
@@ -58,7 +58,7 @@ int	ft_start_routine(t_philo *philo)
 			pthread_mutex_lock(&philo->monitor_mutex);
 			philo->done_eating = true;
 			pthread_mutex_unlock(&philo->monitor_mutex);
-			pthread_join(philo->monitor, NULL);
+			//pthread_join(philo->monitor, NULL);
 			//long timestamp = ft_timestamp_ms();
 			//printf("%ld: P%d done eating\n", timestamp, philo->id + 1);
 			exit (ft_close_semaphores(0));

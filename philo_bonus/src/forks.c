@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:28:34 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/08/13 12:47:52 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/08/13 14:24:52 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,12 @@ int	ft_parent(t_args *args, t_pids *pids)
 	pthread_mutex_unlock(&args->waiter.waiter_mutex);
 	sem_post(args->waiter_sem);
 	sem_post(args->waiter_sem);
+	int i = 0;
+	while (i < args->nb_philo * 2)
+	{
+		sem_post(args->print_sem);
+		i++;
+	}
 	pthread_join(args->waiter.w_thread, NULL);
 	free(pids);
 	ft_close_arr_sems();

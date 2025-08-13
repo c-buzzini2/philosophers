@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 15:30:37 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/08/13 13:23:56 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/08/13 13:36:02 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ typedef struct s_args
 
 
 int				ft_isdigit(int c);
-int	ft_atoi(const char *nptr);
+int				ft_atoi(const char *nptr);
 int				ft_parse_args(t_args *args, int argc, char **argv);
 t_philo			*ft_create_philo(void);
 void			ft_puterror(char *s);

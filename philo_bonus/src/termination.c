@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 10:36:47 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/08/07 11:09:26 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/08/13 14:21:15 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,12 @@ int	ft_close_semaphores(int ret) //only for children!!!!!!
 
 	philo = ft_create_philo();
 	args = ft_args();
+	pthread_join(philo->monitor, NULL);
 	sem_close(philo->turn_sem);
 	sem_close(args->print_sem);
 	sem_close(args->waiter_sem);
 	pthread_mutex_destroy(&philo->monitor_mutex);
 	pthread_mutex_destroy(&philo->death_mutex);
-	//pthread_join(philo->monitor, NULL);
 	return (ret);
 }
 
