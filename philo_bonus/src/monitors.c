@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:32:58 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/08/13 14:17:23 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/08/13 15:17:45 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	ft_check_death_flag(void)
 {
 	t_philo		*philo;
-	
+
 	philo = ft_create_philo();
 	pthread_mutex_lock(&philo->death_mutex);
 	if (philo->death == true)
@@ -66,7 +66,6 @@ static int	ft_check_starvation(t_args *args, t_philo *philo)
 			if (ft_check_death_flag() == 2)
 				return (2);
 			printf("%ld: P%d %s", timestamp, philo->id + 1, "died\n");
-			//sem_post(args->print_sem);
 			pthread_mutex_unlock(&philo->monitor_mutex);
 			pthread_mutex_lock(&philo->death_mutex);
 			philo->death = true;

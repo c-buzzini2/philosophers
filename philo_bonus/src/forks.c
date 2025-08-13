@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:28:34 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/08/13 14:24:52 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/08/13 15:16:40 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 void	ft_change_boolean(t_pids *pids, int exited, t_args *args)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < args->nb_philo)
@@ -31,7 +31,7 @@ void	ft_change_boolean(t_pids *pids, int exited, t_args *args)
 
 void	ft_kill_remaining_processes(t_pids *pids, t_args *args)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < args->nb_philo)
@@ -48,40 +48,30 @@ int	ft_parent(t_args *args, t_pids *pids)
 	int		exited_pid;
 	int		e_code;
 	int		exited_count;
-	//t_waiter	*waiter;
+	int		i;
 
+	i = 0;
 	exited_count = 0;
 	while (exited_count < args->nb_philo)
 	{
 		exited_pid = waitpid(-1, &e_status, 0);
-		
-		//long timestamp = ft_timestamp_ms();
-		//printf("%ld: process %d exited\n", timestamp, exited_pid);
-
 		if (exited_pid > 0)
 		{
 			exited_count++;
 			ft_change_boolean(pids, exited_pid, args);
-			if (WIFEXITED(e_status)) 
+			if (WIFEXITED(e_status))
 			{
 				e_code = WEXITSTATUS(e_status);
-				if (e_code == 2 || e_code == 3) 
+				if (e_code == 2 || e_code == 3)
 					ft_kill_remaining_processes(pids, args);
 			}
 		}
 	}
-	//waiter = ft_init_waiter();
-	//long timestamp = ft_timestamp_ms();
-	//printf("%ld: processes exited\n", timestamp);
-	
-	
-	//printf("processes exited\n");
 	pthread_mutex_lock(&args->waiter.waiter_mutex);
 	args->waiter.kill_waiter = true;
 	pthread_mutex_unlock(&args->waiter.waiter_mutex);
 	sem_post(args->waiter_sem);
 	sem_post(args->waiter_sem);
-	int i = 0;
 	while (i < args->nb_philo * 2)
 	{
 		sem_post(args->print_sem);
@@ -104,7 +94,7 @@ t_philo	*ft_create_philo(void)
 t_pids	*ft_allocate_pids(t_args *args)
 {
 	t_pids	*pids;
-	
+
 	pids = malloc(args->nb_philo * sizeof(t_pids));
 	if (pids == NULL)
 	{

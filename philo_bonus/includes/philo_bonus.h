@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 15:30:37 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/08/13 13:36:02 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/08/13 15:03:11 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ typedef struct s_args
 	t_waiter		waiter;
 }	t_args;
 
-
 int				ft_isdigit(int c);
 int				ft_atoi(const char *nptr);
 int				ft_parse_args(t_args *args, int argc, char **argv);
@@ -98,9 +97,8 @@ void			ft_free_array(int *pids, t_args *args);
 int				ft_mutex_and_thread(t_philo *philo);
 int				ft_check_death_flag(void);
 void			ft_close_arr_sems(void);
-t_waiter		*ft_init_waiter();
+t_waiter		*ft_init_waiter(void);
 int				ft_waiter(t_args *args);
 int				ft_allocate_waiter_arrays(t_args *args);
-
 
 #endif

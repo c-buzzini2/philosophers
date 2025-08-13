@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 11:36:06 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/08/13 13:25:42 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/08/13 15:03:26 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	ft_parse_args(t_args *args, int argc, char **argv)
 	args->sleep_time = ft_atoi(argv[4]);
 	if (argc == 6)
 		args->should_eat = ft_atoi(argv[5]);
-	if (args->die_time == -2 || args->eat_time == -2 
+	if (args->die_time == -2 || args->eat_time == -2
 		|| args->sleep_time == -2 || args->should_eat == -2)
 	{
 		ft_puterror("Args must be ints");

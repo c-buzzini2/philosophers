@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:32:58 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/08/13 13:56:02 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/08/13 15:18:32 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static int	ft_single_philo(t_philo *philo)
 	while (1)
 	{
 		if (ft_check_death_flag() == 2)
-			break;
+			break ;
 		usleep(1000);
 	}
 	exit (ft_close_semaphores(2));
@@ -44,9 +44,6 @@ int	ft_start_routine(t_philo *philo)
 	t_args		*args;
 
 	args = ft_args();
-	//philo->meals = 0; //why do I need to initialize these 3?
-	//philo->last_meal = 0;
-	//philo->death = false;
 	if (args->nb_philo == 1)
 		return (ft_single_philo(philo));
 	while (1)
@@ -58,9 +55,6 @@ int	ft_start_routine(t_philo *philo)
 			pthread_mutex_lock(&philo->monitor_mutex);
 			philo->done_eating = true;
 			pthread_mutex_unlock(&philo->monitor_mutex);
-			//pthread_join(philo->monitor, NULL);
-			//long timestamp = ft_timestamp_ms();
-			//printf("%ld: P%d done eating\n", timestamp, philo->id + 1);
 			exit (ft_close_semaphores(0));
 		}
 		if (ft_check_death_flag() == 2
