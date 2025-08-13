@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:32:58 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/08/13 15:14:39 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/08/13 16:01:42 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,12 +126,13 @@ int	ft_thread_waiter(t_waiter *waiter)
 
 int	ft_waiter(t_args *args)
 {
-	//ft_allocate_waiter_arrays(args, waiter); //error check!!!
+	int	ret;
+
 	if (pthread_mutex_init(&args->waiter.waiter_mutex, NULL) != 0)
 	{
 		ft_puterror("Could not initialize mutex");
 		return (1);
 	}
-	ft_thread_waiter(&args->waiter);
-	return (0);
+	ret = ft_thread_waiter(&args->waiter);
+	return (ret);
 }

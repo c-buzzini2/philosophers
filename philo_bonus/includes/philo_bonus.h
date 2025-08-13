@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 15:30:37 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/08/13 15:03:11 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/08/13 16:32:14 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ unsigned int	ft_strlcpy(char *dst, const char *src, size_t size);
 unsigned int	ft_strlcat(char *dst, const char *src, unsigned int size);
 void			ft_bzero(void *s, size_t n);
 size_t			ft_strlen(const char *s);
-int				ft_forks(t_args *args);
+int				ft_prepare_to_fork(t_args *args);
 int				ft_start_routine(t_philo *philo);
 int				ft_eat(t_philo *philo);
 char			*ft_strjoin(char const *s1, char const *s2);
@@ -100,5 +100,8 @@ void			ft_close_arr_sems(void);
 t_waiter		*ft_init_waiter(void);
 int				ft_waiter(t_args *args);
 int				ft_allocate_waiter_arrays(t_args *args);
+int				ft_waiter_error(t_args *args, t_pids *pids);
+int				ft_parent(t_args *args, t_pids *pids);
+void			ft_kill_remaining_processes(t_pids *pids, t_args *args);
 
 #endif

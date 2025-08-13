@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 15:29:52 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/08/13 13:12:43 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/08/13 16:26:42 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,8 @@ int	main(int argc, char **argv)
 		return (0);
 	ft_unlink_semaphores();
 	ft_print_semaphore(args);
-	ft_forks(args);
+	ft_prepare_to_fork(args);
 	sem_close(args->print_sem);
-	sem_close(args->waiter_sem);
 	ft_unlink_semaphores();
 	return (0);
 }
