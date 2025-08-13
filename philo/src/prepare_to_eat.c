@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:32:58 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/08/04 14:43:05 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/08/13 17:28:52 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,12 @@ static int	ft_single_philo(t_arrays *arrays, int id)
 	return (2);
 }
 
-static void	ft_check_turn(t_arrays *arrays, int id, int l_philo)
+static int	ft_check_turn(t_arrays *arrays, int id, int l_philo)
 {
 	while (1)
 	{
+		if (ft_check_death_flag() == 2)
+			return (2);
 		pthread_mutex_lock(&arrays->waiters[id].turn_mutex);
 		if (arrays->waiters[id].left_turn == 1)
 		{
@@ -57,7 +59,8 @@ static int	ft_assign_forks(t_arrays *arrays, int id, int l_philo)
 		first = l_philo;
 		second = id;
 	}
-	ft_check_turn(arrays, id, l_philo);
+	if (ft_check_turn(arrays, id, l_philo) == 2)
+		return (2);
 	return (ft_grab_forks(first, second, id, l_philo));
 }
 
