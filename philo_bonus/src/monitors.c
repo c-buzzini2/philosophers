@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:32:58 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/08/14 10:59:48 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/08/14 14:39:45 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,6 @@ static int	ft_announce_death(t_args *args, t_philo *philo, long timestamp)
 	sem_wait(args->print_sem);
 	printf("%ld: P%d %s", timestamp, philo->id + 1, "died\n");
 	pthread_mutex_unlock(&philo->monitor_mutex);
-	pthread_mutex_lock(&philo->death_mutex);
-	philo->death = true;
-	pthread_mutex_unlock(&philo->death_mutex);
 	exit (ft_close_semaphores(2));
 }
 

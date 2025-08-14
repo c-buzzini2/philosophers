@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:32:58 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/08/13 17:28:52 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/08/14 13:49:32 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static int	ft_check_turn(t_arrays *arrays, int id, int l_philo)
 			if (arrays->waiters[l_philo].right_turn == 1)
 			{
 				pthread_mutex_unlock(&arrays->waiters[l_philo].turn_mutex);
-				return ;
+				return (0);
 			}
 			pthread_mutex_unlock(&arrays->waiters[l_philo].turn_mutex);
 		}

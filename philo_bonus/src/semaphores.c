@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:28:34 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/08/13 16:39:06 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/08/14 14:37:26 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int	ft_open_turn_sems(t_philo *philo)
 	ft_strlcpy(philo->turn_name, "/turn_id_", 20);
 	ft_strlcat(philo->turn_name, id, 20);
 	free(id);
+	pthread_mutex_lock(&philo->death_mutex);
 	if (philo->id % 2 != 0)
 		philo->turn_sem = sem_open(philo->turn_name, 0);
 	else
@@ -27,8 +28,10 @@ int	ft_open_turn_sems(t_philo *philo)
 	if (philo->turn_sem == SEM_FAILED)
 	{
 		perror("sem_open failed\n");
+		pthread_mutex_unlock(&philo->death_mutex);
 		return (1);
 	}
+	pthread_mutex_unlock(&philo->death_mutex);
 	return (0);
 }
 

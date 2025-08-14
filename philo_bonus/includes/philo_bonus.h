@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 15:30:37 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/08/13 16:38:16 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/08/14 14:35:35 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ typedef struct s_philo
 	char			turn_name[20];	
 	pthread_t		monitor;
 	pthread_mutex_t	monitor_mutex;
-	bool			death;
 	pthread_mutex_t	death_mutex;
 	bool			done_eating;
 }	t_philo;
