@@ -6,7 +6,7 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 16:33:32 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/08/04 12:05:24 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/08/14 11:00:16 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,6 @@ int	ft_sleep_and_think(t_philo *philo, t_args *args)
 	sleep_start = ft_timestamp_ms();
 	while (ft_timestamp_ms() - sleep_start < args->sleep_time)
 	{
-		if (ft_check_death_flag() == 2)
-		{
-			ret = 2;
-			break ;
-		}
 		if (args->sleep_time - (ft_timestamp_ms() - sleep_start) < 5)
 		{
 			usleep((args->sleep_time

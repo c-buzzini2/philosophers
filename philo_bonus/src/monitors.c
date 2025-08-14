@@ -6,26 +6,11 @@
 /*   By: cbuzzini <cbuzzini@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:32:58 by cbuzzini          #+#    #+#             */
-/*   Updated: 2025/08/13 17:09:05 by cbuzzini         ###   ########.fr       */
+/*   Updated: 2025/08/14 10:59:48 by cbuzzini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
-
-int	ft_check_death_flag(void)
-{
-	t_philo		*philo;
-
-	philo = ft_create_philo();
-	pthread_mutex_lock(&philo->death_mutex);
-	if (philo->death == true)
-	{
-		pthread_mutex_unlock(&philo->death_mutex);
-		return (2);
-	}
-	pthread_mutex_unlock(&philo->death_mutex);
-	return (0);
-}
 
 int	ft_mutex_and_thread(t_philo *philo)
 {
@@ -50,14 +35,12 @@ int	ft_mutex_and_thread(t_philo *philo)
 static int	ft_announce_death(t_args *args, t_philo *philo, long timestamp)
 {
 	sem_wait(args->print_sem);
-	if (ft_check_death_flag() == 2)
-		return (2);
 	printf("%ld: P%d %s", timestamp, philo->id + 1, "died\n");
 	pthread_mutex_unlock(&philo->monitor_mutex);
 	pthread_mutex_lock(&philo->death_mutex);
 	philo->death = true;
 	pthread_mutex_unlock(&philo->death_mutex);
-	return (2);
+	exit (ft_close_semaphores(2));
 }
 
 static int	ft_check_starvation(t_args *args, t_philo *philo)
@@ -78,7 +61,7 @@ static int	ft_check_starvation(t_args *args, t_philo *philo)
 		pthread_mutex_unlock(&philo->monitor_mutex);
 		usleep(3000);
 	}
-	return (2);
+	return (0);
 }
 
 void	*ft_monitor(void *arg)
